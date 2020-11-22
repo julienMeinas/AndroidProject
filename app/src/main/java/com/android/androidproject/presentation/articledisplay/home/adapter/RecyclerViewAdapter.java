@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.androidproject.R;
+import com.android.androidproject.data.api.model.NicePlace;
 import com.android.androidproject.presentation.articledisplay.home.fragment.HomeFragment;
 import com.bumptech.glide.Glide;
 
@@ -23,14 +24,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHoler > {
     private static final String TAG = "RecyclerViewAdapter";
-    private ArrayList<String> m_imageNames = new ArrayList<>();
-    private ArrayList<String> m_images = new ArrayList<>();
+    private ArrayList<NicePlace> m_nicePlace = new ArrayList<>();
     private Context m_context;
     private View m_view;
 
-    public RecyclerViewAdapter(ArrayList<String> imageNames, ArrayList<String> images, Context context) {
-        this.m_imageNames = imageNames;
-        this.m_images = images;
+    public RecyclerViewAdapter(ArrayList<NicePlace> nicePlace, Context context) {
+        this.m_nicePlace = nicePlace;
         this.m_context = context;
     }
 
@@ -46,22 +45,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ViewHoler holder, int position) {
         Glide.with(this.m_context)
                 .asBitmap()
-                .load(m_images.get(position))
+                .load(m_nicePlace.get(position).getImageUrl())
                 .into(holder.m_circleImageView);
-        holder.m_textView.setText(m_imageNames.get(position));
+        holder.m_textView.setText(m_nicePlace.get(position).getTitle());
 
         holder.m_relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "OnClick: clicked on : " + m_imageNames.get(position));
-                Toast.makeText(m_context, m_imageNames.get(position), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "OnClick: clicked on : " + m_nicePlace.get(position).getTitle());
+                Toast.makeText(m_context, m_nicePlace.get(position).getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return this.m_imageNames.size();
+        return this.m_nicePlace.size();
     }
 
     public class ViewHoler extends RecyclerView.ViewHolder {
