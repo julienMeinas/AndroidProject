@@ -12,7 +12,18 @@ import androidx.fragment.app.Fragment;
 import com.android.androidproject.R;
 
 public class SearchFragment extends Fragment {
+    private static SearchFragment singleton = null;
     private static final String TAG = "SearchFragment";
+
+    private SearchFragment() {
+    }
+
+    public static SearchFragment newInstance() {
+        if(singleton == null) {
+            singleton = new SearchFragment();
+        }
+        return singleton;
+    }
 
     @Nullable
     @Override

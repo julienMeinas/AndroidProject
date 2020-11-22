@@ -19,10 +19,21 @@ import com.android.androidproject.presentation.articledisplay.home.adapter.Recyc
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+    private static HomeFragment singleton = null;
     private static final String TAG = "HomeFragment";
     private View m_view;
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mImageUrls = new ArrayList<>();
+
+    private HomeFragment(){
+    }
+
+    public static HomeFragment newInstance() {
+        if(singleton == null) {
+            singleton = new HomeFragment();
+        }
+        return singleton;
+    }
 
     @Nullable
     @Override

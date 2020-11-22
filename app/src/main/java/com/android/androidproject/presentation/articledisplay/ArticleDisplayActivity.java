@@ -29,13 +29,13 @@ public class ArticleDisplayActivity extends AppCompatActivity {
         m_BottomNav.setOnNavigationItemSelectedListener(navListerner);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containter,
-                new HomeFragment()).commit();
+                HomeFragment.newInstance()).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListerner =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
-                private final Fragment m_homeFragment = new HomeFragment();
-                private final Fragment m_searchFragment = new SearchFragment();
+                private final Fragment m_homeFragment = HomeFragment.newInstance();
+                private final Fragment m_searchFragment = SearchFragment.newInstance();
                 private final Fragment m_favoriteFragment = new FavoriteFragment();
 
                 @Override
