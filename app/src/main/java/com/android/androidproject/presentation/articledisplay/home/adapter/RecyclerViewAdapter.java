@@ -50,8 +50,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public class ViewHoler extends RecyclerView.ViewHolder {
-        ImageView m_image;
         private TextView m_title;
+        private ImageView m_image;
+        private TextView m_author;
+        private TextView m_date;
         private ArticleViewItem articleViewItem;
         private View m_view;
 
@@ -59,14 +61,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             m_image = itemView.findViewById(R.id.image);
             m_title = itemView.findViewById(R.id.titreArticle);
+            m_author = itemView.findViewById(R.id.author);
+            m_date = itemView.findViewById(R.id.date);
             m_view = itemView;
         }
 
-        void bind(ArticleViewItem bookViewItem) {
-            this.articleViewItem = bookViewItem;
-            m_title.setText(bookViewItem.getTitle());
+        void bind(ArticleViewItem articleViewItem) {
+            this.articleViewItem = articleViewItem;
+            m_title.setText(articleViewItem.getTitle());
+            m_date.setText(articleViewItem.getPublishedAt());
+            m_author.setText(articleViewItem.getAuthor());
             Glide.with(m_view)
-                    .load(bookViewItem.getUrlToImage())
+                    .load(articleViewItem.getUrlToImage())
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(m_image);
