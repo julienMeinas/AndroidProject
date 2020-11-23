@@ -15,7 +15,9 @@ public class ArticleToViewModelMapper {
         res.setAuthor(articleModel.getAuthor());
         res.setDescription(articleModel.getDescription());
         res.setUrl(articleModel.getUrl());
-        res.setUrlToImage(articleModel.getUrlToImage());
+        if(articleModel.getUrlToImage() != null) {
+            res.setUrlToImage(articleModel.getUrlToImage());
+        }
         res.setPublishedAt(articleModel.getPublishedAt());
         return res;
     }

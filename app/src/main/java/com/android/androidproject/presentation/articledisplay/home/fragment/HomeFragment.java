@@ -1,12 +1,10 @@
 package com.android.androidproject.presentation.articledisplay.home.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,12 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.androidproject.R;
-import com.android.androidproject.data.api.model.NicePlace;
 import com.android.androidproject.data.di.FakeDependencyInjection;
 import com.android.androidproject.presentation.articledisplay.home.adapter.ArticleViewItem;
 import com.android.androidproject.presentation.articledisplay.home.adapter.RecyclerViewAdapter;
 import com.android.androidproject.presentation.viewmodel.HomeViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +27,6 @@ public class HomeFragment extends Fragment {
     private static HomeFragment singleton = null;
     private static final String TAG = "HomeFragment";
     private View m_view;
-    private ArrayList<NicePlace> m_nicePlace = new ArrayList<>();
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
 
     private HomeViewModel m_homeViewModel;
