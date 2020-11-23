@@ -18,4 +18,5 @@ public class ArticleResponse {
     public List<ArticleModel> getArticles() {
         return articles;
     }
+
 }
