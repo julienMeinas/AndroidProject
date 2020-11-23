@@ -2,15 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:padding="15dp"
+    android:layout_marginBottom="15dp"
     android:id="@+id/parent_layout"
     android:background="@color/blueItemList">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:id="@+id/image"
         android:src="@mipmap/ic_launcher">
-    </de.hdodenhof.circleimageview.CircleImageView>
+    </ImageView>
+
+    <TextView
+        android:id="@+id/titreArticle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/image"
+        android:text="Titre"
+        android:layout_marginLeft="30dp"
+        android:textSize="15sp"/>
     
     <TextView
         android:id="@+id/image_name"
@@ -19,8 +29,10 @@
         android:text="Canada"
         android:layout_toRightOf="@id/image"
         android:textColor="#000"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="100dp"
         android:layout_marginLeft="30dp"
-        android:textSize="16sp"/>
+        android:textSize="10sp"/>
+
+
 
 </RelativeLayout>

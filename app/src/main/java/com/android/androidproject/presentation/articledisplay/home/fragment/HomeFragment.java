@@ -54,15 +54,11 @@ public class HomeFragment extends Fragment {
         m_view = inflater.inflate(R.layout.fragment_home, container, false);
         //m_HomeViewModel = new ViewModelProvider(requireActivity(), )
 
-        initImageBitmaps();
+        initRecyclerView();
         return m_view;
     }
 
-    private void initImageBitmaps() {
-        Log.d(TAG, "initImageBitmaps: preparing bitmaps");
 
-        initRecyclerView();
-    }
 
     public void initRecyclerView() {
         Log.d(TAG, "initRecyclerView call");
@@ -74,10 +70,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void registerViewModels() {
+        Log.d(TAG, "registerViewModels call");
         m_homeViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(HomeViewModel.class);
         m_homeViewModel.getBestArticles();
-
-
         m_homeViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
 
             @Override
