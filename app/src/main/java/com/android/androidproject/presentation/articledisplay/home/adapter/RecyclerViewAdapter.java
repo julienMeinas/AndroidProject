@@ -32,7 +32,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                              int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_listitem, parent, false);
+                .inflate(R.layout.layout_item_list, parent, false);
         ViewHoler articleViewHolder = new ViewHoler(v);
         return articleViewHolder;
     }

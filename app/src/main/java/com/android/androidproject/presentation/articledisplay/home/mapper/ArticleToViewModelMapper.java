@@ -9,16 +9,28 @@ import java.util.List;
 
 public class ArticleToViewModelMapper {
 
+    private String mapDate(String date) {
+        return date.substring(0, 10);
+    }
+
     private ArticleViewItem map(ArticleModel articleModel) {
         ArticleViewItem res = new ArticleViewItem();
         res.setTitle(articleModel.getTitle());
-        res.setAuthor(articleModel.getAuthor());
+        if(articleModel.getAuthor() != null) {
+            res.setAuthor(articleModel.getAuthor());
+        }
+        else {
+            res.setAuthor("No Author");
+        }
         res.setDescription(articleModel.getDescription());
         res.setUrl(articleModel.getUrl());
         if(articleModel.getUrlToImage() != null) {
             res.setUrlToImage(articleModel.getUrlToImage());
         }
-        res.setPublishedAt(articleModel.getPublishedAt());
+        else{
+            res.setUrlToImage("https://static1.seekingalpha.com/uploads/2020/11/22/173432-16060661162838283.png");
+        }
+        res.setPublishedAt(mapDate(articleModel.getPublishedAt()));
         return res;
     }
 
