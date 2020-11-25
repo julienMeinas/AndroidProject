@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel m_homeViewModel;
     private RecyclerViewAdapter m_recyclerViewAdapter;
 
-    private HomeFragment(){
+    public HomeFragment(){
     }
 
     public static HomeFragment newInstance() {
@@ -45,12 +45,16 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         Log.d(TAG, "onCreateView: started");
         m_view = inflater.inflate(R.layout.fragment_home, container, false);
-        //m_HomeViewModel = new ViewModelProvider(requireActivity(), )
-
-        initRecyclerView();
         return m_view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initRecyclerView();
     }
 
 

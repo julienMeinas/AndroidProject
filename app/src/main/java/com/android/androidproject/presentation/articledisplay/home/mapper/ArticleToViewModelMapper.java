@@ -22,8 +22,6 @@ public class ArticleToViewModelMapper {
         else {
             res.setAuthor("No Author");
         }
-        res.setDescription(articleModel.getDescription());
-        res.setUrl(articleModel.getUrl());
         if(articleModel.getUrlToImage() != null) {
             res.setUrlToImage(articleModel.getUrlToImage());
         }
