@@ -93,11 +93,33 @@
                 android:textColor="@color/white"
                 android:layout_marginLeft="30dp"
                 android:textSize="15sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Info"
+                    android:layout_margin="5dp"
+                    android:textSize="10sp">
+                </Button>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="10sp"
+                    android:text="Fav">
+                </Button>
+
+            </LinearLayout>
         </LinearLayout>
 
 
     </LinearLayout>
-
-
 
 </LinearLayout>
