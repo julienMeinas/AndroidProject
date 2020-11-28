@@ -1,4 +1,4 @@
-package com.android.androidproject.presentation.articledisplay.home.fragment;
+package com.android.androidproject.presentation.articledisplay.MainApplication.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.androidproject.R;
 import com.android.androidproject.data.di.FakeDependencyInjection;
-import com.android.androidproject.presentation.articledisplay.home.adapter.ArticleViewItem;
-import com.android.androidproject.presentation.articledisplay.home.adapter.RecyclerViewAdapter;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.RecyclerViewAdapter;
 import com.android.androidproject.presentation.viewmodel.HomeViewModel;
 
 import java.util.ArrayList;
@@ -79,9 +79,6 @@ public class HomeFragment extends Fragment {
                 m_recyclerViewAdapter.bindViewModels(bookItemViewModelList);
             }
         });
-
-
-
     }
 
 }

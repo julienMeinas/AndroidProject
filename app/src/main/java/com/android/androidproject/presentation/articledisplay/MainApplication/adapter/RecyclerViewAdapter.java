@@ -1,4 +1,4 @@
-package com.android.androidproject.presentation.articledisplay.home.adapter;
+package com.android.androidproject.presentation.articledisplay.MainApplication.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,4 +1,4 @@
-package com.android.androidproject.presentation.articledisplay.home.adapter;
+package com.android.androidproject.presentation.articledisplay.MainApplication.adapter;
 
 public class ArticleViewItem {
     private String author;

@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.android.androidproject.data.repository.articledisplay.ArticleDisplayDataRepository;
 
-public class ViewModelFactory implements ViewModelProvider.Factory {
+public class ViewModelFactoryHome implements ViewModelProvider.Factory {
 
     private final ArticleDisplayDataRepository articleDisplayRepository;
 
-    public ViewModelFactory(ArticleDisplayDataRepository articleDisplayRepository) {
+    public ViewModelFactoryHome(ArticleDisplayDataRepository articleDisplayRepository) {
         this.articleDisplayRepository = articleDisplayRepository;
     }
 

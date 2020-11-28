@@ -6,7 +6,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import com.android.androidproject.data.api.ArticleDisplayService;
 import com.android.androidproject.data.repository.articledisplay.ArticleDisplayDataRepository;
 import com.android.androidproject.data.repository.articledisplay.remote.ArticleDisplayRemoteDataSource;
-import com.android.androidproject.presentation.viewmodel.ViewModelFactory;
+import com.android.androidproject.presentation.viewmodel.ViewModelFactoryHome;
+import com.android.androidproject.presentation.viewmodel.ViewModelFactorySearch;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 
@@ -19,14 +20,21 @@ public class FakeDependencyInjection {
     private static Gson gson;
     private static ArticleDisplayService articleDisplayService;
     private static ArticleDisplayDataRepository articleDisplayDataRepository;
-    private static ViewModelFactory viewModelFactory;
+    private static ViewModelFactoryHome viewModelFactory;
+    private static ViewModelFactorySearch viewModelFactorySearch;
 
-
-    public static ViewModelFactory getViewModelFactory() {
+    public static ViewModelFactoryHome getViewModelFactory() {
         if (viewModelFactory == null) {
-            viewModelFactory = new ViewModelFactory(getBookDisplayRepository());
+            viewModelFactory = new ViewModelFactoryHome(getBookDisplayRepository());
         }
         return viewModelFactory;
+    }
+
+    public static ViewModelFactorySearch getViewModelFactorySearch() {
+        if (viewModelFactorySearch == null) {
+            viewModelFactorySearch = new ViewModelFactorySearch(getBookDisplayRepository());
+        }
+        return viewModelFactorySearch;
     }
 
 

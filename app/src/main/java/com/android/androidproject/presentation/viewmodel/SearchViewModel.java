@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.androidproject.data.api.model.ArticleResponse;
 import com.android.androidproject.data.repository.articledisplay.ArticleDisplayDataRepository;
-import com.android.androidproject.presentation.articledisplay.home.adapter.ArticleViewItem;
-import com.android.androidproject.presentation.articledisplay.home.mapper.ArticleToViewModelMapper;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.MainApplication.mapper.ArticleToViewModelMapper;
 
 import java.util.List;
 
@@ -23,13 +23,14 @@ public class SearchViewModel extends ViewModel {
     private ArticleToViewModelMapper articleToViewModelMapper;
     private MutableLiveData<List<ArticleViewItem>> m_Articles = new MutableLiveData<List<ArticleViewItem>>();
 
+
     public SearchViewModel(ArticleDisplayDataRepository articleDisplayDataRepository) {
         this.articleDisplayDataRepository = articleDisplayDataRepository;
         this.articleToViewModelMapper = new ArticleToViewModelMapper();
         this.compositeDisposable = new CompositeDisposable();
     }
 
-    public void getBestArticles(String keyword) {
+    public void getArticlesByKeyWork(String keyword) {
         isDataLoading.postValue(true);
         compositeDisposable.clear();
         compositeDisposable.add(articleDisplayDataRepository.getSearchArticles(keyword)
@@ -52,4 +53,13 @@ public class SearchViewModel extends ViewModel {
     }
 
     public LiveData<List<ArticleViewItem>> getArticles() {return this.m_Articles; }
+
+    public MutableLiveData<Boolean> getIsDataLoading() {
+        return isDataLoading;
+    }
+
+    public void cancelSubscription() {
+        compositeDisposable.clear();
+        isDataLoading.setValue(false);
+    }
 }

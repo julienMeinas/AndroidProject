@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorItem"
     android:padding="15dp"
-    android:layout_marginBottom="20dp"
+    android:layout_marginBottom="3dp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -22,7 +22,6 @@
             android:layout_marginRight="100dp">
 
             <ImageView
-                android:background="@color/colorLogoInItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/layout_author"
@@ -34,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:textColor="@color/white"
                 android:text="Author" />
         </LinearLayout>
 
@@ -48,8 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/layout_date"
-                android:layout_marginRight="5dp"
-                android:background="@color/colorLogoInItem">
+                android:layout_marginRight="5dp">
             </ImageView>
 
             <TextView
@@ -57,53 +56,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date"
+                android:textColor="@color/white"
                 android:layout_alignParentRight="true"/>
 
         </LinearLayout>
 
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:id="@+id/image"
-        android:src="@mipmap/ic_launcher"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
-    </ImageView>
-
-    <LinearLayout android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/titreArticle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/image"
-            android:text="Titre"
-            android:layout_marginLeft="30dp"
-            android:textSize="15sp"/>
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/colorLogoInItem"
-            android:src="@drawable/layout_info">
-        </ImageButton>
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/image"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+        </ImageView>
 
 
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/titreArticle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/image"
+                android:text="Titre"
+                android:textColor="@color/white"
+                android:layout_marginLeft="30dp"
+                android:textSize="15sp"/>
+        </LinearLayout>
 
 
     </LinearLayout>
+
 
 
 </LinearLayout>

@@ -1,10 +1,9 @@
-package com.android.androidproject.presentation.articledisplay.home.mapper;
+package com.android.androidproject.presentation.articledisplay.MainApplication.mapper;
 
 import com.android.androidproject.data.api.model.ArticleModel;
-import com.android.androidproject.presentation.articledisplay.home.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ArticleToViewModelMapper {
