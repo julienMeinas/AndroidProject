@@ -1,5 +1,6 @@
 package com.android.androidproject.presentation.articledisplay.MainApplication.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.androidproject.R;
 import com.android.androidproject.data.di.FakeDependencyInjection;
+import com.android.androidproject.presentation.InfoActivity.InfoActivity;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.RecyclerViewAdapter;
 import com.android.androidproject.presentation.viewmodel.HomeViewModel;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import androidx.lifecycle.Observer;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ArticleActionInterface {
     private static HomeFragment singleton = null;
     private static final String TAG = "HomeFragment";
     private View m_view;
@@ -62,7 +65,7 @@ public class HomeFragment extends Fragment {
     public void initRecyclerView() {
         Log.d(TAG, "initRecyclerView call");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
-        m_recyclerViewAdapter = new RecyclerViewAdapter();
+        m_recyclerViewAdapter = new RecyclerViewAdapter(this);
         recyclerView.setAdapter(m_recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         registerViewModels();
@@ -81,4 +84,23 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onInfoClicked(String articleTitle, String articleAuthor,
+                              String articleDate, String articleDescription,
+                              String articleUrlImage) {
+        Log.d(TAG, "onInfoClicked call");
+        Intent intent = new Intent(getActivity(), InfoActivity.class);
+        intent.putExtra(InfoActivity.TITLE_MESSAGE, articleTitle);
+        intent.putExtra(InfoActivity.AUTHOR_MESSAGE, articleAuthor);
+        intent.putExtra(InfoActivity.DATE_MESSAGE, articleDate);
+        intent.putExtra(InfoActivity.DESCRIPTION_MESSAGE, articleDescription);
+        intent.putExtra(InfoActivity.URL_IMAGE_MESSAGE, articleUrlImage);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onFav(String articleTitle, String articleAuthor,
+                      String articleDate, String articleDescription) {
+        Log.d(TAG, "onFav call");
+    }
 }

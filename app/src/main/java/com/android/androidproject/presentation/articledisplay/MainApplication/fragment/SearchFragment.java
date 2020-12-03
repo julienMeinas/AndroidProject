@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 
 import com.android.androidproject.R;
 import com.android.androidproject.data.di.FakeDependencyInjection;
+import com.android.androidproject.presentation.InfoActivity.InfoActivity;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.RecyclerViewAdapter;
 import com.android.androidproject.presentation.viewmodel.SearchViewModel;
@@ -27,7 +30,7 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements ArticleActionInterface {
     public static SearchFragment singleton = null;
     public static final String TAG = "SearchFragment";
     private View m_view;
@@ -118,9 +121,28 @@ public class SearchFragment extends Fragment {
 
     private void setupRecyclerView() {
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
-        m_recyclerViewAdapter = new RecyclerViewAdapter();
+        m_recyclerViewAdapter = new RecyclerViewAdapter(this);
         recyclerView.setAdapter(m_recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
+    @Override
+    public void onInfoClicked(String articleTitle, String articleAuthor,
+                              String articleDate, String articleDescription,
+                              String articleUrlImage) {
+        Log.d(TAG, "onInfoClicked call");
+        Intent intent = new Intent(getActivity(), InfoActivity.class);
+        intent.putExtra(InfoActivity.TITLE_MESSAGE, articleTitle);
+        intent.putExtra(InfoActivity.AUTHOR_MESSAGE, articleAuthor);
+        intent.putExtra(InfoActivity.DATE_MESSAGE, articleDate);
+        intent.putExtra(InfoActivity.DESCRIPTION_MESSAGE, articleDescription);
+        intent.putExtra(InfoActivity.URL_IMAGE_MESSAGE, articleUrlImage);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onFav(String articleTitle, String articleAuthor,
+                      String articleDate, String articleDescription) {
+        Log.d(TAG, "onFav call");
+    }
 }

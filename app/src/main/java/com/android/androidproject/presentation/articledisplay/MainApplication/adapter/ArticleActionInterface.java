@@ -2,7 +2,10 @@ package com.android.androidproject.presentation.articledisplay.MainApplication.a
 
 public interface ArticleActionInterface {
 
-    void onGameInfoClicked(String gameTitle);
+    void onInfoClicked(String articleTitle, String articleAuthor,
+                       String articleDate, String articleDescription,
+                       String articleUrlImage);
 
-    void onGameClicked(String gameTitle);
+    void onFav(String articleTitle, String articleAuthor,
+               String articleDate, String articleDescription);
 }

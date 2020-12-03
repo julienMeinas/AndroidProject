@@ -28,6 +28,8 @@ public class ArticleToViewModelMapper {
             res.setUrlToImage("https://static1.seekingalpha.com/uploads/2020/11/22/173432-16060661162838283.png");
         }
         res.setPublishedAt(mapDate(articleModel.getPublishedAt()));
+        res.setDescription(articleModel.getDescription());
+        res.setUrl(articleModel.getUrl());
         return res;
     }
 

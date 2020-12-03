@@ -12,7 +12,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="blueItemList">#92CCD2</color>
     <color name="colorBackground">#e9294f</color>
-    <color name="colorLogoInItem">#00457f</color>
+    <color name="colorLogoInItem">#FF6200EE</color>
     <color name="colorItem">#222837</color>
 
 </resources>
