@@ -1,9 +1,14 @@
 package com.android.androidproject.data.di;
 
+import android.content.Context;
+
+import androidx.room.Room;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 import com.android.androidproject.data.api.ArticleDisplayService;
+import com.android.androidproject.data.db.ArticleDatabase;
 import com.android.androidproject.data.repository.articledisplay.ArticleDisplayDataRepository;
 import com.android.androidproject.data.repository.articledisplay.remote.ArticleDisplayRemoteDataSource;
 import com.android.androidproject.presentation.viewmodel.ViewModelFactoryHome;
@@ -22,6 +27,8 @@ public class FakeDependencyInjection {
     private static ArticleDisplayDataRepository articleDisplayDataRepository;
     private static ViewModelFactoryHome viewModelFactory;
     private static ViewModelFactorySearch viewModelFactorySearch;
+    private static Context applicationContext;
+    private static ArticleDatabase articleDatabase;
 
     public static ViewModelFactoryHome getViewModelFactory() {
         if (viewModelFactory == null) {
@@ -80,5 +87,17 @@ public class FakeDependencyInjection {
             gson = new Gson();
         }
         return gson;
+    }
+
+    public static void setContext(Context context) {
+        applicationContext = context;
+    }
+
+    public static ArticleDatabase getArticleDatabase() {
+    if (articleDatabase == null) {
+        articleDatabase = Room.databaseBuilder(applicationContext,
+                    ArticleDatabase.class, "book-database").build();
+        }
+        return articleDatabase;
     }
 }
