@@ -18,6 +18,7 @@ import com.android.androidproject.data.di.FakeDependencyInjection;
 import com.android.androidproject.presentation.InfoActivity.InfoActivity;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.grille.RecyclerViewGrilleAdapter;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
 import com.android.androidproject.presentation.viewmodel.SearchViewModel;
 
@@ -27,6 +28,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +40,9 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
 
     private SearchViewModel m_searchViewModel;
-    private RecyclerViewListAdapter m_recyclerViewAdapter;
+    private RecyclerViewListAdapter m_recyclerViewListAdapter;
+    private RecyclerViewGrilleAdapter m_recyclerViewGrilleAdapter;
+    private boolean layoutManagerList;
 
     public SearchFragment(){}
 
@@ -62,23 +66,66 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupSearchView();
-        setupRecyclerView();
+        setupRecyclerViewList();
 
-        registerViewModels();
+        m_view.findViewById(R.id.switch_layout_manager).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutManagerList) {
+                    setupRecyclerViewGrid();
+                    layoutManagerList = false;
+                }
+                else {
+                    setupRecyclerViewList();
+                    layoutManagerList = true;
+                }
+            }
+        });
+
     }
 
-    private void registerViewModels() {
+
+    private void setupRecyclerViewList() {
+        RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
+        m_recyclerViewListAdapter = new RecyclerViewListAdapter(this);
+        recyclerView.setAdapter(m_recyclerViewListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        registerViewModelsList();
+    }
+
+
+    private void registerViewModelsList() {
         m_searchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactorySearch()).get(SearchViewModel.class);
         //System.out.println("FVVM is " + bookFavoriteViewModel);
 
         m_searchViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
-                m_recyclerViewAdapter.bindViewModels(bookItemViewModelList);
+                m_recyclerViewListAdapter.bindViewModels(bookItemViewModelList);
             }
         });
+    }
 
 
+    private void setupRecyclerViewGrid() {
+        RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
+        m_recyclerViewGrilleAdapter = new RecyclerViewGrilleAdapter(this);
+        recyclerView.setAdapter(m_recyclerViewGrilleAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        registerViewModelsGrid();
+    }
+
+
+    private void registerViewModelsGrid() {
+        m_searchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactorySearch()).get(SearchViewModel.class);
+        //System.out.println("FVVM is " + bookFavoriteViewModel);
+
+        m_searchViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
+            @Override
+            public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
+                m_recyclerViewGrilleAdapter.bindViewModels(bookItemViewModelList);
+            }
+        });
     }
 
 
@@ -119,12 +166,6 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
         });
     }
 
-    private void setupRecyclerView() {
-        RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
-        m_recyclerViewAdapter = new RecyclerViewListAdapter(this);
-        recyclerView.setAdapter(m_recyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
 
     @Override
     public void onInfoClicked(String articleTitle, String articleAuthor,
