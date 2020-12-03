@@ -1,6 +1,5 @@
-package com.android.androidproject.presentation.articledisplay.MainApplication.adapter;
+package com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.androidproject.R;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHoler > {
+public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewListAdapter.ViewHoler > {
     private static final String TAG = "RecyclerViewAdapter";
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
     private ArticleActionInterface m_articleActionInterface;
 
-    public RecyclerViewAdapter(ArticleActionInterface articleActionInterface) {
+    public RecyclerViewListAdapter(ArticleActionInterface articleActionInterface) {
         this.m_articleActionInterface = articleActionInterface;
     }
 

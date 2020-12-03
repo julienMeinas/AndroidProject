@@ -8,10 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.android.androidproject.presentation.articledisplay.MainApplication.fragment.HomeFragment;
+import com.android.androidproject.presentation.articledisplay.MainApplication.fragment.home.HomeFragment;
 import com.android.androidproject.R;
 import com.android.androidproject.presentation.articledisplay.favorite.fragment.FavoriteFragment;
-import com.android.androidproject.presentation.articledisplay.MainApplication.fragment.SearchFragment;
+import com.android.androidproject.presentation.articledisplay.MainApplication.fragment.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ArticleDisplayActivity extends AppCompatActivity {

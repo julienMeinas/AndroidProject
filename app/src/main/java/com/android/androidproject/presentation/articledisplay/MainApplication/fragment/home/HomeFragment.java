@@ -1,4 +1,4 @@
-package com.android.androidproject.presentation.articledisplay.MainApplication.fragment;
+package com.android.androidproject.presentation.articledisplay.MainApplication.fragment.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import com.android.androidproject.data.di.FakeDependencyInjection;
 import com.android.androidproject.presentation.InfoActivity.InfoActivity;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.RecyclerViewAdapter;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
 import com.android.androidproject.presentation.viewmodel.HomeViewModel;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
 
     private HomeViewModel m_homeViewModel;
-    private RecyclerViewAdapter m_recyclerViewAdapter;
+    private RecyclerViewListAdapter m_recyclerViewAdapter;
 
     public HomeFragment(){
     }
@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     public void initRecyclerView() {
         Log.d(TAG, "initRecyclerView call");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
-        m_recyclerViewAdapter = new RecyclerViewAdapter(this);
+        m_recyclerViewAdapter = new RecyclerViewListAdapter(this);
         recyclerView.setAdapter(m_recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         registerViewModels();

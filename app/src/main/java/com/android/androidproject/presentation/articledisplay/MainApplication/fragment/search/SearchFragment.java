@@ -1,4 +1,4 @@
-package com.android.androidproject.presentation.articledisplay.MainApplication.fragment;
+package com.android.androidproject.presentation.articledisplay.MainApplication.fragment.search;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +18,7 @@ import com.android.androidproject.data.di.FakeDependencyInjection;
 import com.android.androidproject.presentation.InfoActivity.InfoActivity;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.RecyclerViewAdapter;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
 import com.android.androidproject.presentation.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
 
     private SearchViewModel m_searchViewModel;
-    private RecyclerViewAdapter m_recyclerViewAdapter;
+    private RecyclerViewListAdapter m_recyclerViewAdapter;
 
     public SearchFragment(){}
 
@@ -121,7 +121,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
 
     private void setupRecyclerView() {
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
-        m_recyclerViewAdapter = new RecyclerViewAdapter(this);
+        m_recyclerViewAdapter = new RecyclerViewListAdapter(this);
         recyclerView.setAdapter(m_recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
