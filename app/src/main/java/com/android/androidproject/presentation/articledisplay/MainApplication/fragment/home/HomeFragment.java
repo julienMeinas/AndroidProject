@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ import com.android.androidproject.data.di.FakeDependencyInjection;
 import com.android.androidproject.presentation.InfoActivity.InfoActivity;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.grille.RecyclerViewGrilleAdapter;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
 import com.android.androidproject.presentation.viewmodel.HomeViewModel;
 
@@ -33,7 +35,9 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
 
     private HomeViewModel m_homeViewModel;
-    private RecyclerViewListAdapter m_recyclerViewAdapter;
+    private RecyclerViewListAdapter m_recyclerViewListAdapter;
+    private RecyclerViewGrilleAdapter m_recyclerViewGrilleAdapter;
+    private boolean layoutManagerList;
 
     public HomeFragment(){
     }
@@ -57,21 +61,35 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initRecyclerView();
+        layoutManagerList = true;
+        initRecyclerViewList();
+        m_view.findViewById(R.id.switch_layout_manager).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(layoutManagerList) {
+                    initRecyclerViewGrid();
+                    layoutManagerList = false;
+                }
+                else {
+                    initRecyclerViewList();
+                    layoutManagerList = true;
+                }
+            }
+        });
     }
 
 
 
-    public void initRecyclerView() {
+    public void initRecyclerViewList() {
         Log.d(TAG, "initRecyclerView call");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
-        m_recyclerViewAdapter = new RecyclerViewListAdapter(this);
-        recyclerView.setAdapter(m_recyclerViewAdapter);
+        m_recyclerViewListAdapter = new RecyclerViewListAdapter(this);
+        recyclerView.setAdapter(m_recyclerViewListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        registerViewModels();
+        registerViewModelsList();
     }
 
-    private void registerViewModels() {
+    private void registerViewModelsList() {
         Log.d(TAG, "registerViewModels call");
         m_homeViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(HomeViewModel.class);
         m_homeViewModel.getBestArticles();
@@ -79,7 +97,31 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
 
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
-                m_recyclerViewAdapter.bindViewModels(bookItemViewModelList);
+                m_recyclerViewListAdapter.bindViewModels(bookItemViewModelList);
+            }
+        });
+    }
+
+
+    public void initRecyclerViewGrid() {
+        Log.d(TAG, "initRecyclerView call");
+        RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
+        m_recyclerViewGrilleAdapter = new RecyclerViewGrilleAdapter(this);
+        recyclerView.setAdapter(m_recyclerViewGrilleAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        registerViewModelsGrid();
+    }
+
+
+    private void registerViewModelsGrid() {
+        Log.d(TAG, "registerViewModels call");
+        m_homeViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(HomeViewModel.class);
+        m_homeViewModel.getBestArticles();
+        m_homeViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
+
+            @Override
+            public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
+                m_recyclerViewGrilleAdapter.bindViewModels(bookItemViewModelList);
             }
         });
     }
