@@ -20,11 +20,11 @@ public class ArticleDisplayLocalDataSource {
         return m_articleDatabase.bookDao().loadFavorites();
     }
 
-    public Completable addBookToFavorites(ArticleEntity bookEntity) {
+    public Completable addArticleToFavorites(ArticleEntity bookEntity) {
         return m_articleDatabase.bookDao().addArticleToFavorites(bookEntity);
     }
 
-    public Completable deleteBookFromFavorites(String id) {
+    public Completable deleteArticleFromFavorites(String id) {
         return m_articleDatabase.bookDao().deleteArticleFromFavorites(id);
     }
 
