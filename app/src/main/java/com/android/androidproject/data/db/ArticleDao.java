@@ -16,12 +16,15 @@ import io.reactivex.Single;
 public interface ArticleDao {
 
     @Query("SELECT * from articleentity")
-    Flowable<List<ArticleDao>> loadFavorites();
+    Flowable<List<ArticleEntity>> loadFavorites();
 
     @Insert
-    public Completable addBookToFavorites(ArticleEntity bookEntity);
+    public Completable addArticleToFavorites(ArticleEntity bookEntity);
 
     @Query("DELETE FROM articleentity WHERE title = :title")
-    public Completable deleteBookFromFavorites(String title);
+    public Completable deleteArticleFromFavorites(String title);
+
+    @Query("SELECT title from articleentity")
+    Single<List<String>> getFavoriteTitleList();
 
 }

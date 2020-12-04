@@ -9,6 +9,7 @@ public class ArticleModel {
     private String urlToImage;
     private String publishedAt;
     private String content;
+    private boolean isFavorite;
 
     public ArticleModel(ArticleSource m_articleSource, String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
         this.m_articleSource = m_articleSource;
@@ -19,6 +20,7 @@ public class ArticleModel {
         this.urlToImage = urlToImage;
         this.publishedAt = publishedAt;
         this.content = content;
+        this.isFavorite = false;
     }
 
     public ArticleSource getM_articleSource() {
@@ -83,5 +85,9 @@ public class ArticleModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void setFavorite() {
+        this.isFavorite = !isFavorite;
     }
 }
