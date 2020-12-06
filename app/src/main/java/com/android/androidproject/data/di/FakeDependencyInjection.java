@@ -7,10 +7,14 @@ import androidx.room.Room;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+import com.android.androidproject.ArticleApplication;
 import com.android.androidproject.data.api.ArticleDisplayService;
 import com.android.androidproject.data.db.ArticleDatabase;
 import com.android.androidproject.data.repository.articledisplay.ArticleDisplayDataRepository;
+import com.android.androidproject.data.repository.articledisplay.local.ArticleDisplayLocalDataSource;
 import com.android.androidproject.data.repository.articledisplay.remote.ArticleDisplayRemoteDataSource;
+import com.android.androidproject.presentation.viewmodel.FavoriteViewModel;
+import com.android.androidproject.presentation.viewmodel.ViewModelFactoryFavorite;
 import com.android.androidproject.presentation.viewmodel.ViewModelFactoryHome;
 import com.android.androidproject.presentation.viewmodel.ViewModelFactorySearch;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -29,26 +33,35 @@ public class FakeDependencyInjection {
     private static ViewModelFactorySearch viewModelFactorySearch;
     private static Context applicationContext;
     private static ArticleDatabase articleDatabase;
+    private static ViewModelFactoryFavorite viewModelFactoryFavorite;
 
     public static ViewModelFactoryHome getViewModelFactory() {
         if (viewModelFactory == null) {
-            viewModelFactory = new ViewModelFactoryHome(getBookDisplayRepository());
+            viewModelFactory = new ViewModelFactoryHome(getArticleDisplayRepository());
         }
         return viewModelFactory;
     }
 
     public static ViewModelFactorySearch getViewModelFactorySearch() {
         if (viewModelFactorySearch == null) {
-            viewModelFactorySearch = new ViewModelFactorySearch(getBookDisplayRepository());
+            viewModelFactorySearch = new ViewModelFactorySearch(getArticleDisplayRepository());
         }
         return viewModelFactorySearch;
     }
 
+    public static ViewModelFactoryFavorite getFavoriteViewModel() {
+        if (viewModelFactoryFavorite == null) {
+            viewModelFactoryFavorite = new ViewModelFactoryFavorite(getArticleDisplayRepository());
+        }
+        return viewModelFactoryFavorite;
+    }
 
-    public static ArticleDisplayDataRepository getBookDisplayRepository() {
+
+    public static ArticleDisplayDataRepository getArticleDisplayRepository() {
         if (articleDisplayDataRepository == null) {
             articleDisplayDataRepository = new ArticleDisplayDataRepository(
-                    new ArticleDisplayRemoteDataSource(getArticleDisplayService())
+                    new ArticleDisplayRemoteDataSource(getArticleDisplayService()),
+                    new ArticleDisplayLocalDataSource(getArticleDatabase())
             );
         }
         return articleDisplayDataRepository;
@@ -96,7 +109,7 @@ public class FakeDependencyInjection {
     public static ArticleDatabase getArticleDatabase() {
     if (articleDatabase == null) {
         articleDatabase = Room.databaseBuilder(applicationContext,
-                    ArticleDatabase.class, "book-database").build();
+                    ArticleDatabase.class, "article-database").build();
         }
         return articleDatabase;
     }

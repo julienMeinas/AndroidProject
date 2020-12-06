@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.androidproject.data.entity.ArticleEntity;
 import com.android.androidproject.data.repository.articledisplay.ArticleDisplayDataRepository;
-import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleDetailViewModel;
-import com.android.androidproject.presentation.articledisplay.favorite.mapper.ArticleEntityToDetailViewModelMapper;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.favorite.mapper.ArticleEntityToViewModelMapper;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ import io.reactivex.subscribers.ResourceSubscriber;
 
 public class FavoriteViewModel extends ViewModel {
     private ArticleDisplayDataRepository articleDisplayDataRepository;
-    private ArticleEntityToDetailViewModelMapper articleEntityToDetailViewModelMapper;
+    private ArticleEntityToViewModelMapper articleEntityToViewModelMapper;
     private CompositeDisposable compositeDisposable;
-    private MutableLiveData<List<ArticleDetailViewModel>> favorites;
+    private MutableLiveData<List<ArticleViewItem>> favorites;
     private MutableLiveData<Boolean> isDataLoading = new MutableLiveData<Boolean>();
     final MutableLiveData<Event<ArticleEntity>> articleAddedEvent = new MutableLiveData<Event<ArticleEntity>>();
     final MutableLiveData<Event<String>> articleDeletedEvent = new MutableLiveData<Event<String>>();
@@ -28,7 +28,7 @@ public class FavoriteViewModel extends ViewModel {
     public FavoriteViewModel(ArticleDisplayDataRepository articleDisplayDataRepository) {
         this.articleDisplayDataRepository = articleDisplayDataRepository;
         this.compositeDisposable = new CompositeDisposable();
-        this.articleEntityToDetailViewModelMapper = new ArticleEntityToDetailViewModelMapper();
+        this.articleEntityToViewModelMapper = new ArticleEntityToViewModelMapper();
     }
 
     public MutableLiveData<Event<ArticleEntity>> getBookAddedEvent() {
@@ -39,10 +39,10 @@ public class FavoriteViewModel extends ViewModel {
         return articleDeletedEvent;
     }
 
-    public MutableLiveData<List<ArticleDetailViewModel>> getFavorites() {
+    public MutableLiveData<List<ArticleViewItem>> getFavorites() {
         isDataLoading.setValue(true);
         if (favorites == null) {
-            favorites = new MutableLiveData<List<ArticleDetailViewModel>>();
+            favorites = new MutableLiveData<List<ArticleViewItem>>();
             compositeDisposable.add(articleDisplayDataRepository.getFavoriteBooks()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -51,7 +51,7 @@ public class FavoriteViewModel extends ViewModel {
                         @Override
                         public void onNext(List<ArticleEntity> articleEntityList) {
                             isDataLoading.setValue(false);
-                            favorites.setValue(articleEntityToDetailViewModelMapper.map(articleEntityList));
+                            favorites.setValue(articleEntityToViewModelMapper.map(articleEntityList));
                             System.out.println("BIND FAVORITES");
                         }
 

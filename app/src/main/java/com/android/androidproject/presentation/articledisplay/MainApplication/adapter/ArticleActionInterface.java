@@ -7,5 +7,6 @@ public interface ArticleActionInterface {
                        String articleUrlImage);
 
     void onFav(String articleTitle, String articleAuthor,
-               String articleDate, String articleDescription);
+               String articleDate, String articleDescription,
+               String urlImage);
 }

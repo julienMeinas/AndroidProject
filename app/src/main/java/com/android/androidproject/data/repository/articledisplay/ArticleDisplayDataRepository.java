@@ -12,6 +12,7 @@ import java.util.function.Function;
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
 import io.reactivex.Flowable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.Single;
 import retrofit2.http.Path;
 
@@ -26,11 +27,33 @@ public class ArticleDisplayDataRepository {
     }
 
     public Single<ArticleResponse> getBestsArticles() {
-        return this.articleDisplayRemoteDataSource.getBestsArticles();
+        return this.articleDisplayRemoteDataSource.getBestsArticles()
+                .zipWith(articleDisplayLocalDataSource.getFavoriteTitleList(), new BiFunction<ArticleResponse, List<String>, ArticleResponse>() {
+                    @Override
+                    public ArticleResponse apply(ArticleResponse articleSearchResponse, List<String> titleList) throws Exception {
+                        for (ArticleModel article : articleSearchResponse.getArticles()) {
+                            if (titleList.contains(article.getTitle())) {
+                                article.setFavorite();
+                            }
+                        }
+                        return articleSearchResponse;
+                    }
+                });
     }
 
     public Single<ArticleResponse> getSearchArticles(@Path("search-terms") String searchTerms) {
-        return this.articleDisplayRemoteDataSource.getSearchArticles(searchTerms);
+        return this.articleDisplayRemoteDataSource.getSearchArticles(searchTerms)
+                .zipWith(articleDisplayLocalDataSource.getFavoriteTitleList(), new BiFunction<ArticleResponse, List<String>, ArticleResponse>() {
+                    @Override
+                    public ArticleResponse apply(ArticleResponse articleSearchResponse, List<String> titleList) throws Exception {
+                        for (ArticleModel article : articleSearchResponse.getArticles()) {
+                            if (titleList.contains(article.getTitle())) {
+                                article.setFavorite();
+                            }
+                        }
+                        return articleSearchResponse;
+                    }
+                });
     }
 
     public Flowable<List<ArticleEntity>> getFavoriteBooks() {

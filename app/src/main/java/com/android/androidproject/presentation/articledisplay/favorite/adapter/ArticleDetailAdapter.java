@@ -1,4 +1,4 @@
-package com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list;
+package com.android.androidproject.presentation.articledisplay.favorite.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,21 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.androidproject.R;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewListAdapter.ViewHoler > {
-    private static final String TAG = "RecyclerViewAdapter";
-    private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
-    private ArticleActionInterface m_articleActionInterface;
+public class ArticleDetailAdapter extends RecyclerView.Adapter<ArticleDetailAdapter.ViewHoler > {
+    private static final String TAG = "ArticleDetailAdapter";
+    private List<ArticleViewItem> m_articles;
+    private ArticleDetailActionInterface articleDetailActionInterface;
 
-    public RecyclerViewListAdapter(ArticleActionInterface articleActionInterface) {
-        this.m_articleActionInterface = articleActionInterface;
+    public ArticleDetailAdapter(ArticleDetailActionInterface articleDetailActionInterface) {
+        this.articleDetailActionInterface = articleDetailActionInterface;
+        this.m_articles = new ArrayList<>();
     }
 
     public void bindViewModels(List<ArticleViewItem> bookViewItemList) {
@@ -33,28 +34,25 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
         notifyDataSetChanged();
     }
 
-    // Create new views (invoked by the layout manager)
-    @Override
     public ViewHoler onCreateViewHolder(ViewGroup parent,
-                                             int viewType) {
+                                                                int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_item_list, parent, false);
-        ViewHoler articleViewHolder = new ViewHoler(v, m_articleActionInterface);
+                .inflate(R.layout.layout_favorite_item_list, parent, false);
+        ViewHoler articleViewHolder = new ViewHoler(v, articleDetailActionInterface);
         return articleViewHolder;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHoler holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHoler holder, int position) {
         holder.bind(m_articles.get(position));
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
+
     public int getItemCount() {
         return m_articles.size();
     }
+
 
     public class ViewHoler extends RecyclerView.ViewHolder {
         private TextView m_title;
@@ -63,9 +61,9 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
         private TextView m_date;
         private ArticleViewItem articleViewItem;
         private View m_view;
-        private ArticleActionInterface m_articleActionInterface;
+        private ArticleDetailActionInterface m_articleActionInterface;
 
-        public ViewHoler(@NonNull View itemView, ArticleActionInterface articleActionInterface) {
+        public ViewHoler(@NonNull View itemView, ArticleDetailActionInterface articleActionInterface) {
             super(itemView);
             this.m_articleActionInterface = articleActionInterface;
             m_image = itemView.findViewById(R.id.image);
@@ -90,22 +88,21 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
                 @Override
                 public void onClick(View v) {
                     m_articleActionInterface.onInfoClicked(articleViewItem.getTitle(), articleViewItem.getAuthor(),
-                                                           articleViewItem.getPublishedAt(), articleViewItem.getDescription(),
-                                                           articleViewItem.getUrlToImage());
+                            articleViewItem.getPublishedAt(), articleViewItem.getDescription(),
+                            articleViewItem.getUrlToImage());
                 }
             });
 
-            this.m_view.findViewById(R.id.button_fav).setOnClickListener(new View.OnClickListener() {
+            this.m_view.findViewById(R.id.button_remove).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    m_articleActionInterface.onFav(articleViewItem.getTitle(), articleViewItem.getAuthor(),
-                            articleViewItem.getPublishedAt(), articleViewItem.getDescription(), articleViewItem.getUrlToImage());
+                    m_articleActionInterface.removeFavorite(articleViewItem.getTitle());
                 }
             });
-
         }
 
 
 
     }
+
 }

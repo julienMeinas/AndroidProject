@@ -15,11 +15,13 @@ import android.view.ViewGroup;
 
 import com.android.androidproject.R;
 import com.android.androidproject.data.di.FakeDependencyInjection;
+import com.android.androidproject.data.entity.ArticleEntity;
 import com.android.androidproject.presentation.InfoActivity.InfoActivity;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.grille.RecyclerViewGrilleAdapter;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
+import com.android.androidproject.presentation.viewmodel.FavoriteViewModel;
 import com.android.androidproject.presentation.viewmodel.SearchViewModel;
 
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
 
     private SearchViewModel m_searchViewModel;
+    private FavoriteViewModel favoriteViewModel;
     private RecyclerViewListAdapter m_recyclerViewListAdapter;
     private RecyclerViewGrilleAdapter m_recyclerViewGrilleAdapter;
     private boolean layoutManagerList;
@@ -96,6 +99,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
 
     private void registerViewModelsList() {
         m_searchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactorySearch()).get(SearchViewModel.class);
+        favoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getFavoriteViewModel()).get(FavoriteViewModel.class);
         //System.out.println("FVVM is " + bookFavoriteViewModel);
 
         m_searchViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
@@ -183,7 +187,15 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
 
     @Override
     public void onFav(String articleTitle, String articleAuthor,
-                      String articleDate, String articleDescription) {
+                      String articleDate, String articleDescription, String articleUrlImage) {
         Log.d(TAG, "onFav call");
+        ArticleEntity articleEntity = new ArticleEntity();
+        articleEntity.setTitle(articleTitle);
+        articleEntity.setAuthor(articleAuthor);
+        articleEntity.setDate(articleDate);
+        articleEntity.setDescription(articleDescription);
+        articleEntity.setImageUrl(articleUrlImage);
+
+        favoriteViewModel.addBookToFavorite(articleEntity);
     }
 }

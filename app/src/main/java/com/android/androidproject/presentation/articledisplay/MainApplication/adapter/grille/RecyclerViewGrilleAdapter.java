@@ -102,7 +102,7 @@ public class RecyclerViewGrilleAdapter extends RecyclerView.Adapter<RecyclerView
                 @Override
                 public void onClick(View v) {
                     m_articleActionInterface.onFav(articleViewItem.getTitle(), articleViewItem.getAuthor(),
-                            articleViewItem.getPublishedAt(), articleViewItem.getDescription());
+                            articleViewItem.getPublishedAt(), articleViewItem.getDescription(), articleViewItem.getUrlToImage());
                 }
             });
 

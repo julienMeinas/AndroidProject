@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.androidproject.R;
 import com.android.androidproject.data.di.FakeDependencyInjection;
+import com.android.androidproject.data.entity.ArticleEntity;
 import com.android.androidproject.presentation.InfoActivity.InfoActivity;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.grille.RecyclerViewGrilleAdapter;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
+import com.android.androidproject.presentation.viewmodel.FavoriteViewModel;
 import com.android.androidproject.presentation.viewmodel.HomeViewModel;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
 
     private HomeViewModel m_homeViewModel;
+    private FavoriteViewModel favoriteViewModel;
     private RecyclerViewListAdapter m_recyclerViewListAdapter;
     private RecyclerViewGrilleAdapter m_recyclerViewGrilleAdapter;
     private boolean layoutManagerList;
@@ -92,6 +95,7 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     private void registerViewModelsList() {
         Log.d(TAG, "registerViewModels call");
         m_homeViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(HomeViewModel.class);
+        favoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getFavoriteViewModel()).get(FavoriteViewModel.class);
         m_homeViewModel.getBestArticles();
         m_homeViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
 
@@ -142,7 +146,15 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
 
     @Override
     public void onFav(String articleTitle, String articleAuthor,
-                      String articleDate, String articleDescription) {
+                      String articleDate, String articleDescription, String articleUrlImage) {
+        ArticleEntity articleEntity = new ArticleEntity();
+        articleEntity.setTitle(articleTitle);
+        articleEntity.setAuthor(articleAuthor);
+        articleEntity.setDate(articleDate);
+        articleEntity.setDescription(articleDescription);
+        articleEntity.setImageUrl(articleUrlImage);
+
+        favoriteViewModel.addBookToFavorite(articleEntity);
         Log.d(TAG, "onFav call");
     }
 }
