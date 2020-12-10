@@ -1,6 +1,6 @@
 package com.android.androidproject.presentation.articledisplay.favorite.adapter;
 
-public class ArticleDetailViewModel {
+public class ArticleFavoriteViewModel {
     private String author;
     private String title;
     private String urlToImage;

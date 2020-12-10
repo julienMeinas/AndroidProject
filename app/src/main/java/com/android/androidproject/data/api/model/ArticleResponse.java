@@ -2,6 +2,9 @@ package com.android.androidproject.data.api.model;
 
 import java.util.List;
 
+/**
+ * object model which is used to retrieve the response of an API call
+ */
 public class ArticleResponse {
     private String status;
     private int totalResults;

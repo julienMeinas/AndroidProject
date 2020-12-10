@@ -13,10 +13,17 @@ public class ArticleDisplayRemoteDataSource {
         this.m_articleDisplayService = m_articleDisplayService;
     }
 
+    /**
+     * @return : get all bests articles
+     */
     public Single<ArticleResponse> getBestsArticles() {
         return this.m_articleDisplayService.getBestsArticles();
     }
 
+    /**
+     * @param searchTerms : search terms
+     * @return : get all articles who contains "searchTerms"
+     */
     public Single<ArticleResponse> getSearchArticles(@Path("search-terms") String searchTerms) {
         return this.m_articleDisplayService.searchArticles(searchTerms);
     }

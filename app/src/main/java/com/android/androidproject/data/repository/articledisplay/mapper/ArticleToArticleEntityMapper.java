@@ -5,6 +5,11 @@ import com.android.androidproject.data.entity.ArticleEntity;
 
 public class ArticleToArticleEntityMapper {
 
+    /**
+     * method for transform ArticleModel object to ArticleEntity object
+     * @param articleModel the ArticleModel object
+     * @return : return new object ArticleEntity
+     */
     public ArticleEntity map(ArticleModel articleModel) {
         ArticleEntity res = new ArticleEntity();
         res.setAuthor(articleModel.getAuthor());

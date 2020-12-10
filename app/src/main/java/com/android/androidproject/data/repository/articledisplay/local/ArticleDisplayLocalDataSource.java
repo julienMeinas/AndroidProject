@@ -16,18 +16,32 @@ public class ArticleDisplayLocalDataSource {
         this.m_articleDatabase = articleDatabase;
     }
 
+    /**
+     * @return the articles in local dada base
+     */
     public Flowable<List<ArticleEntity>> loadFavorites() {
         return m_articleDatabase.bookDao().loadFavorites();
     }
 
+    /**
+     * @param bookEntity : object articles
+     * @return : add bookEntity in data base
+     */
     public Completable addArticleToFavorites(ArticleEntity bookEntity) {
         return m_articleDatabase.bookDao().addArticleToFavorites(bookEntity);
     }
 
-    public Completable deleteArticleFromFavorites(String id) {
-        return m_articleDatabase.bookDao().deleteArticleFromFavorites(id);
+    /**
+     * @param title : title of the article to be deleted
+     * @return : remove article with the title
+     */
+    public Completable deleteArticleFromFavorites(String title) {
+        return m_articleDatabase.bookDao().deleteArticleFromFavorites(title);
     }
 
+    /**
+     * @return : get all title of articles in data base
+     */
     public Single<List<String>> getFavoriteTitleList() {
         return m_articleDatabase.bookDao().getFavoriteTitleList();
     }

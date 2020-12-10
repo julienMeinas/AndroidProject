@@ -43,7 +43,7 @@ public class FavoriteViewModel extends ViewModel {
         isDataLoading.setValue(true);
         if (favorites == null) {
             favorites = new MutableLiveData<List<ArticleViewItem>>();
-            compositeDisposable.add(articleDisplayDataRepository.getFavoriteBooks()
+            compositeDisposable.add(articleDisplayDataRepository.getFavoriteArticles()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new ResourceSubscriber<List<ArticleEntity>>() {
@@ -77,7 +77,7 @@ public class FavoriteViewModel extends ViewModel {
     }
 
     public void addBookToFavorite(final ArticleEntity articleEntity) {
-        compositeDisposable.add(articleDisplayDataRepository.addBookToFavorites(articleEntity)
+        compositeDisposable.add(articleDisplayDataRepository.addArticleToFavorites(articleEntity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableCompletableObserver() {
@@ -94,7 +94,7 @@ public class FavoriteViewModel extends ViewModel {
     }
 
     public void removeBookFromFavorites(final String title) {
-        compositeDisposable.add(articleDisplayDataRepository.removeBookFromFavorites(title)
+        compositeDisposable.add(articleDisplayDataRepository.removeArticleFromFavorites(title)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableCompletableObserver() {

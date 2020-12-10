@@ -26,6 +26,9 @@ public class ArticleDisplayDataRepository {
         this.articleDisplayLocalDataSource = articleDisplayLocalDataSource;
     }
 
+    /**
+     * @return : get all bests articles
+     */
     public Single<ArticleResponse> getBestsArticles() {
         return this.articleDisplayRemoteDataSource.getBestsArticles()
                 .zipWith(articleDisplayLocalDataSource.getFavoriteTitleList(), new BiFunction<ArticleResponse, List<String>, ArticleResponse>() {
@@ -33,7 +36,7 @@ public class ArticleDisplayDataRepository {
                     public ArticleResponse apply(ArticleResponse articleSearchResponse, List<String> titleList) throws Exception {
                         for (ArticleModel article : articleSearchResponse.getArticles()) {
                             if (titleList.contains(article.getTitle())) {
-                                article.setFavorite();
+                                article.addFavorite();
                             }
                         }
                         return articleSearchResponse;
@@ -41,6 +44,10 @@ public class ArticleDisplayDataRepository {
                 });
     }
 
+    /**
+     * @param searchTerms : search terms
+     * @return : get all articles who contains "searchTerms"
+     */
     public Single<ArticleResponse> getSearchArticles(@Path("search-terms") String searchTerms) {
         return this.articleDisplayRemoteDataSource.getSearchArticles(searchTerms)
                 .zipWith(articleDisplayLocalDataSource.getFavoriteTitleList(), new BiFunction<ArticleResponse, List<String>, ArticleResponse>() {
@@ -48,7 +55,7 @@ public class ArticleDisplayDataRepository {
                     public ArticleResponse apply(ArticleResponse articleSearchResponse, List<String> titleList) throws Exception {
                         for (ArticleModel article : articleSearchResponse.getArticles()) {
                             if (titleList.contains(article.getTitle())) {
-                                article.setFavorite();
+                                article.addFavorite();
                             }
                         }
                         return articleSearchResponse;
@@ -56,15 +63,26 @@ public class ArticleDisplayDataRepository {
                 });
     }
 
-    public Flowable<List<ArticleEntity>> getFavoriteBooks() {
+    /**
+     * @return all articles in favorite data base
+     */
+    public Flowable<List<ArticleEntity>> getFavoriteArticles() {
         return articleDisplayLocalDataSource.loadFavorites();
     }
 
-    public Completable addBookToFavorites(ArticleEntity articleEntity) {
+    /**
+     * @param articleEntity : article
+     * @return : add article in data base
+     */
+    public Completable addArticleToFavorites(ArticleEntity articleEntity) {
         return articleDisplayLocalDataSource.addArticleToFavorites(articleEntity);
     }
 
-    public Completable removeBookFromFavorites(String bookId) {
-        return articleDisplayLocalDataSource.deleteArticleFromFavorites(bookId);
+    /**
+     * @param articleTitle : title of a article
+     * @return : remove article in data base with the title "articleTitle"
+     */
+    public Completable removeArticleFromFavorites(String articleTitle) {
+        return articleDisplayLocalDataSource.deleteArticleFromFavorites(articleTitle);
     }
 }

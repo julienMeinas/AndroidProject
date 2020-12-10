@@ -16,6 +16,9 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * View model for Home page
+ */
 public class HomeViewModel extends ViewModel {
     private ArticleDisplayDataRepository articleDisplayDataRepository;
     private CompositeDisposable compositeDisposable;
@@ -29,6 +32,9 @@ public class HomeViewModel extends ViewModel {
         this.compositeDisposable = new CompositeDisposable();
     }
 
+    /**
+     * Method for get Bests Articles in m_Articles
+     */
     public void getBestArticles() {
         isDataLoading.postValue(true);
         compositeDisposable.clear();
@@ -51,6 +57,8 @@ public class HomeViewModel extends ViewModel {
                 }));
     }
 
-    
+    /**
+     * @return all bests articles
+     */
     public LiveData<List<ArticleViewItem>> getArticles() {return this.m_Articles; }
 }

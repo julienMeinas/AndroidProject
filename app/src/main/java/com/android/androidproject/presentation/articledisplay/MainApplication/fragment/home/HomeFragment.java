@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -25,6 +26,7 @@ import com.android.androidproject.presentation.articledisplay.MainApplication.ad
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
 import com.android.androidproject.presentation.viewmodel.FavoriteViewModel;
 import com.android.androidproject.presentation.viewmodel.HomeViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     private static final String TAG = "HomeFragment";
     private View m_view;
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
-
+    private CoordinatorLayout coordinatorLayout;
     private HomeViewModel m_homeViewModel;
     private FavoriteViewModel favoriteViewModel;
     private RecyclerViewListAdapter m_recyclerViewListAdapter;
@@ -66,6 +68,7 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
         super.onActivityCreated(savedInstanceState);
         layoutManagerList = true;
         initRecyclerViewList();
+        coordinatorLayout = m_view.findViewById(R.id.home);
         m_view.findViewById(R.id.switch_layout_manager).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +133,11 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
         });
     }
 
+    public void displaySnackBar(String message) {
+        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG)
+                .show();
+    }
+
     @Override
     public void onInfoClicked(String articleTitle, String articleAuthor,
                               String articleDate, String articleDescription,
@@ -147,6 +155,8 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     @Override
     public void onFav(String articleTitle, String articleAuthor,
                       String articleDate, String articleDescription, String articleUrlImage) {
+        Log.d(TAG, "onFav call");
+        displaySnackBar("Ajout au favoris");
         ArticleEntity articleEntity = new ArticleEntity();
         articleEntity.setTitle(articleTitle);
         articleEntity.setAuthor(articleAuthor);
@@ -155,6 +165,6 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
         articleEntity.setImageUrl(articleUrlImage);
 
         favoriteViewModel.addBookToFavorite(articleEntity);
-        Log.d(TAG, "onFav call");
     }
+
 }

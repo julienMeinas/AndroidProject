@@ -30,6 +30,7 @@ public class ArticleToViewModelMapper {
         res.setPublishedAt(mapDate(articleModel.getPublishedAt()));
         res.setDescription(articleModel.getDescription());
         res.setUrl(articleModel.getUrl());
+        res.setIsFavorite(articleModel.getFavorite());
         return res;
     }
 

@@ -198,4 +198,5 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
 
         favoriteViewModel.addBookToFavorite(articleEntity);
     }
+
 }

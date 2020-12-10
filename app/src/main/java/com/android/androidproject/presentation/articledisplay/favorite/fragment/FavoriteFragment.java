@@ -16,12 +16,9 @@ import com.android.androidproject.R;
 import com.android.androidproject.data.di.FakeDependencyInjection;
 import com.android.androidproject.presentation.InfoActivity.InfoActivity;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
-import com.android.androidproject.presentation.articledisplay.MainApplication.fragment.home.HomeFragment;
-import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleDetailActionInterface;
-import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleDetailAdapter;
-import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleDetailViewModel;
-import com.android.androidproject.presentation.viewmodel.Event;
+import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleActionInterface;
+import com.android.androidproject.presentation.articledisplay.favorite.adapter.RecyclerViewAdapterFavorite;
+import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleFavoriteViewModel;
 import com.android.androidproject.presentation.viewmodel.FavoriteViewModel;
 import com.android.androidproject.presentation.viewmodel.HomeViewModel;
 
@@ -31,15 +28,15 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class FavoriteFragment extends Fragment implements ArticleDetailActionInterface {
+public class FavoriteFragment extends Fragment implements ArticleActionInterface {
     private static FavoriteFragment singleton = null;
     private static final String TAG = "FavoriteFragment";
     private View m_view;
-    private ArrayList<ArticleDetailViewModel> m_articles = new ArrayList<>();
+    private ArrayList<ArticleFavoriteViewModel> m_articles = new ArrayList<>();
 
     private FavoriteViewModel m_favoriteViewModel;
     private HomeViewModel m_homeViewModel;
-    private ArticleDetailAdapter m_recyclerViewListAdapter;
+    private RecyclerViewAdapterFavorite m_recyclerViewListAdapter;
 
 
     public FavoriteFragment() {
@@ -56,14 +53,15 @@ public class FavoriteFragment extends Fragment implements ArticleDetailActionInt
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: started");
         super.onCreateView(inflater, container, savedInstanceState);
         this.m_view =  inflater.inflate(R.layout.fragment_favorite, container, false);
-        Log.d(TAG, "onCreateView: started");
         return this.m_view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onActivityCreated: started");
         super.onActivityCreated(savedInstanceState);
         initRecyclerViewList();
     }
@@ -71,7 +69,7 @@ public class FavoriteFragment extends Fragment implements ArticleDetailActionInt
     public void initRecyclerViewList() {
         Log.d(TAG, "initRecyclerView call");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
-        m_recyclerViewListAdapter = new ArticleDetailAdapter(this);
+        m_recyclerViewListAdapter = new RecyclerViewAdapterFavorite(this);
         recyclerView.setAdapter(m_recyclerViewListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         registerViewModels();
@@ -105,7 +103,7 @@ public class FavoriteFragment extends Fragment implements ArticleDetailActionInt
 
     @Override
     public void removeFavorite(String title) {
-        Log.d(TAG, "onFav call");
+        Log.d(TAG, "onRemove call");
         m_favoriteViewModel.removeBookFromFavorites(title);
     }
 

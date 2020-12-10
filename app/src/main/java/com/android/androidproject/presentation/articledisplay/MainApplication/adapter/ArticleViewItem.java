@@ -7,6 +7,7 @@ public class ArticleViewItem {
     private String publishedAt;
     private String description;
     private String url;
+    private boolean isFavorite;
 
     public String getAuthor() {
         return author;
@@ -28,6 +29,8 @@ public class ArticleViewItem {
 
     public String getUrl() { return url; }
 
+    public boolean getIsFavorite() {return this.isFavorite;}
+
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -47,4 +50,6 @@ public class ArticleViewItem {
     public void setDescription(String description) { this.description = description; }
 
     public void setUrl(String url) { this.url = url; }
+
+    public void setIsFavorite(boolean b) {this.isFavorite = b;}
 }

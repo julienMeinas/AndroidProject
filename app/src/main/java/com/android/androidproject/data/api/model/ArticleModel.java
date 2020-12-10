@@ -1,5 +1,8 @@
 package com.android.androidproject.data.api.model;
 
+/**
+ * object model which is used to retrieve the articles of an API call
+ */
 public class ArticleModel {
     private ArticleSource m_articleSource;
     private String author;
@@ -55,6 +58,10 @@ public class ArticleModel {
         return content;
     }
 
+    public Boolean getFavorite() {
+        return this.isFavorite;
+    }
+
     public void setM_articleSource(ArticleSource m_articleSource) {
         this.m_articleSource = m_articleSource;
     }
@@ -87,7 +94,7 @@ public class ArticleModel {
         this.content = content;
     }
 
-    public void setFavorite() {
-        this.isFavorite = !isFavorite;
+    public void addFavorite() {
+        this.isFavorite = true;
     }
 }

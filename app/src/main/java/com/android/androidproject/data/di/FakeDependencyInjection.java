@@ -24,6 +24,9 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * method that simulates the use of the library Dagger
+ */
 public class FakeDependencyInjection {
     private static Retrofit retrofit;
     private static Gson gson;

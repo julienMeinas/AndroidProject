@@ -1,5 +1,6 @@
 package com.android.androidproject.presentation.articledisplay.favorite.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.androidproject.R;
 import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleDetailAdapter extends RecyclerView.Adapter<ArticleDetailAdapter.ViewHoler > {
+public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapterFavorite.ViewHoler > {
     private static final String TAG = "ArticleDetailAdapter";
     private List<ArticleViewItem> m_articles;
-    private ArticleDetailActionInterface articleDetailActionInterface;
+    private ArticleActionInterface articleDetailActionInterface;
 
-    public ArticleDetailAdapter(ArticleDetailActionInterface articleDetailActionInterface) {
+    public RecyclerViewAdapterFavorite(ArticleActionInterface articleDetailActionInterface) {
         this.articleDetailActionInterface = articleDetailActionInterface;
         this.m_articles = new ArrayList<>();
     }
@@ -34,9 +34,8 @@ public class ArticleDetailAdapter extends RecyclerView.Adapter<ArticleDetailAdap
         notifyDataSetChanged();
     }
 
-    public ViewHoler onCreateViewHolder(ViewGroup parent,
-                                                                int viewType) {
-        // create a new view
+    public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder started");
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_favorite_item_list, parent, false);
         ViewHoler articleViewHolder = new ViewHoler(v, articleDetailActionInterface);
@@ -45,6 +44,7 @@ public class ArticleDetailAdapter extends RecyclerView.Adapter<ArticleDetailAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHoler holder, int position) {
+        Log.d(TAG, "onBindViewHolder call");
         holder.bind(m_articles.get(position));
     }
 
@@ -61,9 +61,9 @@ public class ArticleDetailAdapter extends RecyclerView.Adapter<ArticleDetailAdap
         private TextView m_date;
         private ArticleViewItem articleViewItem;
         private View m_view;
-        private ArticleDetailActionInterface m_articleActionInterface;
+        private ArticleActionInterface m_articleActionInterface;
 
-        public ViewHoler(@NonNull View itemView, ArticleDetailActionInterface articleActionInterface) {
+        public ViewHoler(@NonNull View itemView, ArticleActionInterface articleActionInterface) {
             super(itemView);
             this.m_articleActionInterface = articleActionInterface;
             m_image = itemView.findViewById(R.id.image);

@@ -1,8 +1,10 @@
 package com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
     }
 
     public void bindViewModels(List<ArticleViewItem> bookViewItemList) {
+        Log.d(TAG, "bindViewModels call");
         this.m_articles.clear();
         this.m_articles.addAll(bookViewItemList);
         notifyDataSetChanged();
@@ -35,8 +38,7 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ViewHoler onCreateViewHolder(ViewGroup parent,
-                                             int viewType) {
+    public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_item_list, parent, false);
@@ -61,6 +63,7 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
         private ImageView m_image;
         private TextView m_author;
         private TextView m_date;
+        private Button buttonFav;
         private ArticleViewItem articleViewItem;
         private View m_view;
         private ArticleActionInterface m_articleActionInterface;
@@ -73,6 +76,7 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
             m_author = itemView.findViewById(R.id.author);
             m_date = itemView.findViewById(R.id.date);
             m_view = itemView;
+            buttonFav = itemView.findViewById(R.id.button_fav);
         }
 
         public void bind(ArticleViewItem articleViewItem) {
@@ -85,6 +89,7 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(m_image);
+
 
             this.m_view.findViewById(R.id.button_info).setOnClickListener(new View.OnClickListener() {
                 @Override
