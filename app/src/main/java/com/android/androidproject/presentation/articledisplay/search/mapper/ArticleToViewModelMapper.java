@@ -1,7 +1,7 @@
-package com.android.androidproject.presentation.articledisplay.MainApplication.mapper;
+package com.android.androidproject.presentation.articledisplay.search.mapper;
 
 import com.android.androidproject.data.api.model.ArticleModel;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.search.adapter.ArticleViewItem;
 
 import java.util.ArrayList;
 import java.util.List;

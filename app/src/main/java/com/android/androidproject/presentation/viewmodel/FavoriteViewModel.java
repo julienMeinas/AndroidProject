@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.androidproject.data.entity.ArticleEntity;
 import com.android.androidproject.data.repository.articledisplay.ArticleDisplayDataRepository;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleViewItem;
 import com.android.androidproject.presentation.articledisplay.favorite.mapper.ArticleEntityToViewModelMapper;
 
 import java.util.List;

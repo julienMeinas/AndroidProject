@@ -1,10 +1,8 @@
-package com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list;
+package com.android.androidproject.presentation.articledisplay.search.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,25 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.androidproject.R;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.search.adapter.ArticleActionInterface;
+import com.android.androidproject.presentation.articledisplay.search.adapter.ArticleViewItem;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewListAdapter.ViewHoler > {
+public class RecyclerViewGrilleAdapter extends RecyclerView.Adapter<RecyclerViewGrilleAdapter.ViewHoler > {
     private static final String TAG = "RecyclerViewAdapter";
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
     private ArticleActionInterface m_articleActionInterface;
 
-    public RecyclerViewListAdapter(ArticleActionInterface articleActionInterface) {
+    public RecyclerViewGrilleAdapter(ArticleActionInterface articleActionInterface) {
         this.m_articleActionInterface = articleActionInterface;
     }
 
     public void bindViewModels(List<ArticleViewItem> bookViewItemList) {
-        Log.d(TAG, "bindViewModels call");
         this.m_articles.clear();
         this.m_articles.addAll(bookViewItemList);
         notifyDataSetChanged();
@@ -38,10 +35,11 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHoler onCreateViewHolder(ViewGroup parent,
+                                        int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_item_list, parent, false);
+                .inflate(R.layout.layout_item_grille, parent, false);
         ViewHoler articleViewHolder = new ViewHoler(v, m_articleActionInterface);
         return articleViewHolder;
     }
@@ -58,12 +56,13 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
         return m_articles.size();
     }
 
+
+
     public class ViewHoler extends RecyclerView.ViewHolder {
         private TextView m_title;
         private ImageView m_image;
-        private TextView m_author;
-        private TextView m_date;
-        private Button buttonFav;
+        //private TextView m_author;
+        //private TextView m_date;
         private ArticleViewItem articleViewItem;
         private View m_view;
         private ArticleActionInterface m_articleActionInterface;
@@ -73,30 +72,28 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
             this.m_articleActionInterface = articleActionInterface;
             m_image = itemView.findViewById(R.id.image);
             m_title = itemView.findViewById(R.id.titreArticle);
-            m_author = itemView.findViewById(R.id.author);
-            m_date = itemView.findViewById(R.id.date);
+            //m_author = itemView.findViewById(R.id.author);
+            //m_date = itemView.findViewById(R.id.date);
             m_view = itemView;
-            buttonFav = itemView.findViewById(R.id.button_fav);
         }
 
-        public void bind(ArticleViewItem articleViewItem) {
+        void bind(ArticleViewItem articleViewItem) {
             this.articleViewItem = articleViewItem;
             m_title.setText(articleViewItem.getTitle());
-            m_date.setText(articleViewItem.getPublishedAt());
-            m_author.setText(articleViewItem.getAuthor());
+            //m_date.setText(articleViewItem.getPublishedAt());
+            //m_author.setText(articleViewItem.getAuthor());
             Glide.with(m_view)
                     .load(articleViewItem.getUrlToImage())
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(m_image);
 
-
             this.m_view.findViewById(R.id.button_info).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     m_articleActionInterface.onInfoClicked(articleViewItem.getTitle(), articleViewItem.getAuthor(),
-                                                           articleViewItem.getPublishedAt(), articleViewItem.getDescription(),
-                                                           articleViewItem.getUrlToImage());
+                            articleViewItem.getPublishedAt(), articleViewItem.getDescription(),
+                            articleViewItem.getUrlToImage());
                 }
             });
 
@@ -109,8 +106,5 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
             });
 
         }
-
-
-
     }
 }

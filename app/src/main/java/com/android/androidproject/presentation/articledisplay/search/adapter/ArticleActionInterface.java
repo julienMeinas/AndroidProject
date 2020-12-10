@@ -1,4 +1,4 @@
-package com.android.androidproject.presentation.articledisplay.MainApplication.adapter;
+package com.android.androidproject.presentation.articledisplay.search.adapter;
 
 public interface ArticleActionInterface {
 

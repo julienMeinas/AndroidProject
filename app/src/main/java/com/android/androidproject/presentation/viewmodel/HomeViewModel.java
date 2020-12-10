@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.android.androidproject.data.api.model.ArticleResponse;
 import com.android.androidproject.data.repository.articledisplay.ArticleDisplayDataRepository;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
-import com.android.androidproject.presentation.articledisplay.MainApplication.mapper.ArticleToViewModelMapper;
+import com.android.androidproject.presentation.articledisplay.home.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.home.mapper.ArticleToViewModelMapper;
 
 import java.util.List;
 

@@ -1,10 +1,4 @@
-package com.android.androidproject.presentation.articledisplay.MainApplication.fragment.search;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+package com.android.androidproject.presentation.articledisplay.home.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,45 +7,49 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.androidproject.R;
-import com.android.androidproject.data.di.FakeDependencyInjection;
-import com.android.androidproject.data.entity.ArticleEntity;
-import com.android.androidproject.presentation.InfoActivity.InfoActivity;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleActionInterface;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.grille.RecyclerViewGrilleAdapter;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.list.RecyclerViewListAdapter;
-import com.android.androidproject.presentation.viewmodel.FavoriteViewModel;
-import com.android.androidproject.presentation.viewmodel.SearchViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import androidx.lifecycle.Observer;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SearchFragment extends Fragment implements ArticleActionInterface {
-    public static SearchFragment singleton = null;
-    public static final String TAG = "SearchFragment";
-    private View m_view;
-    private SearchView searchView;
-    private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
+import com.android.androidproject.R;
+import com.android.androidproject.data.di.FakeDependencyInjection;
+import com.android.androidproject.data.entity.ArticleEntity;
+import com.android.androidproject.presentation.InfoActivity.InfoActivity;
+import com.android.androidproject.presentation.articledisplay.home.adapter.ArticleActionInterface;
+import com.android.androidproject.presentation.articledisplay.home.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.home.adapter.RecyclerViewGrilleAdapter;
+import com.android.androidproject.presentation.articledisplay.home.adapter.RecyclerViewListAdapter;
+import com.android.androidproject.presentation.viewmodel.FavoriteViewModel;
+import com.android.androidproject.presentation.viewmodel.HomeViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
-    private SearchViewModel m_searchViewModel;
+import java.util.ArrayList;
+import java.util.List;
+import androidx.lifecycle.Observer;
+
+public class HomeFragment extends Fragment implements ArticleActionInterface {
+    private static HomeFragment singleton = null;
+    private static final String TAG = "HomeFragment";
+    private View m_view;
+    private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
+    private CoordinatorLayout coordinatorLayout;
+    private HomeViewModel m_homeViewModel;
     private FavoriteViewModel favoriteViewModel;
     private RecyclerViewListAdapter m_recyclerViewListAdapter;
     private RecyclerViewGrilleAdapter m_recyclerViewGrilleAdapter;
     private boolean layoutManagerList;
 
-    public SearchFragment(){}
+    public HomeFragment(){
+    }
 
-    public static SearchFragment newInstance(){
+    public static HomeFragment newInstance() {
         if(singleton == null) {
-            singleton = new SearchFragment();
+            singleton = new HomeFragment();
         }
         return singleton;
     }
@@ -61,34 +59,35 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         Log.d(TAG, "onCreateView: started");
-        m_view = inflater.inflate(R.layout.fragment_search, container, false);
+        m_view = inflater.inflate(R.layout.fragment_home, container, false);
         return m_view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupSearchView();
-        setupRecyclerViewList();
-
+        layoutManagerList = true;
+        initRecyclerViewList();
+        coordinatorLayout = m_view.findViewById(R.id.home);
         m_view.findViewById(R.id.switch_layout_manager).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(layoutManagerList) {
-                    setupRecyclerViewGrid();
+                    initRecyclerViewGrid();
                     layoutManagerList = false;
                 }
                 else {
-                    setupRecyclerViewList();
+                    initRecyclerViewList();
                     layoutManagerList = true;
                 }
             }
         });
-
     }
 
 
-    private void setupRecyclerViewList() {
+
+    public void initRecyclerViewList() {
+        Log.d(TAG, "initRecyclerView call");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
         m_recyclerViewListAdapter = new RecyclerViewListAdapter(this);
         recyclerView.setAdapter(m_recyclerViewListAdapter);
@@ -96,13 +95,13 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
         registerViewModelsList();
     }
 
-
     private void registerViewModelsList() {
-        m_searchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactorySearch()).get(SearchViewModel.class);
+        Log.d(TAG, "registerViewModels call");
+        m_homeViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(HomeViewModel.class);
         favoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getFavoriteViewModel()).get(FavoriteViewModel.class);
-        //System.out.println("FVVM is " + bookFavoriteViewModel);
+        m_homeViewModel.getBestArticles();
+        m_homeViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
 
-        m_searchViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
                 m_recyclerViewListAdapter.bindViewModels(bookItemViewModelList);
@@ -111,7 +110,8 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     }
 
 
-    private void setupRecyclerViewGrid() {
+    public void initRecyclerViewGrid() {
+        Log.d(TAG, "initRecyclerView call");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
         m_recyclerViewGrilleAdapter = new RecyclerViewGrilleAdapter(this);
         recyclerView.setAdapter(m_recyclerViewGrilleAdapter);
@@ -121,10 +121,11 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
 
 
     private void registerViewModelsGrid() {
-        m_searchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactorySearch()).get(SearchViewModel.class);
-        //System.out.println("FVVM is " + bookFavoriteViewModel);
+        Log.d(TAG, "registerViewModels call");
+        m_homeViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(HomeViewModel.class);
+        m_homeViewModel.getBestArticles();
+        m_homeViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
 
-        m_searchViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
                 m_recyclerViewGrilleAdapter.bindViewModels(bookItemViewModelList);
@@ -132,44 +133,10 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
         });
     }
 
-
-    private void setupSearchView() {
-        searchView = m_view.findViewById(R.id.search_view);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            private Timer timer = new Timer();
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(final String s) {
-                if (s.length() == 0) {
-                    m_searchViewModel.cancelSubscription();
-                } else {
-                    timer.cancel();
-                    timer = new Timer();
-                    int sleep = 350;
-                    if (s.length() == 1)
-                        sleep = 5000;
-                    else if (s.length() <= 3)
-                        sleep = 300;
-                    else if (s.length() <= 5)
-                        sleep = 200;
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            m_searchViewModel.getArticlesByKeyWork(s);
-                            System.out.println(m_searchViewModel.getArticles());
-                        }
-                    }, sleep);
-                }
-                return true;
-            }
-        });
+    public void displaySnackBar(String message) {
+        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG)
+                .show();
     }
-
 
     @Override
     public void onInfoClicked(String articleTitle, String articleAuthor,
@@ -189,6 +156,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     public void onFav(String articleTitle, String articleAuthor,
                       String articleDate, String articleDescription, String articleUrlImage) {
         Log.d(TAG, "onFav call");
+        displaySnackBar("Ajout au favoris");
         ArticleEntity articleEntity = new ArticleEntity();
         articleEntity.setTitle(articleTitle);
         articleEntity.setAuthor(articleAuthor);

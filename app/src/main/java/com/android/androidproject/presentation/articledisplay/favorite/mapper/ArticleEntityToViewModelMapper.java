@@ -1,7 +1,7 @@
 package com.android.androidproject.presentation.articledisplay.favorite.mapper;
 
 import com.android.androidproject.data.entity.ArticleEntity;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleViewItem;
 
 import java.util.ArrayList;
 import java.util.List;

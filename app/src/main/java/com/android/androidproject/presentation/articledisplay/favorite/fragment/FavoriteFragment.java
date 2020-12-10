@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.android.androidproject.R;
 import com.android.androidproject.data.di.FakeDependencyInjection;
 import com.android.androidproject.presentation.InfoActivity.InfoActivity;
-import com.android.androidproject.presentation.articledisplay.MainApplication.adapter.ArticleViewItem;
+import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleViewItem;
 import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.favorite.adapter.RecyclerViewAdapterFavorite;
 import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleFavoriteViewModel;
