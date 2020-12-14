@@ -21,11 +21,13 @@ public class InfoActivity extends AppCompatActivity {
     public static final String DATE_MESSAGE = "_DATE";
     public static final String DESCRIPTION_MESSAGE = "_DESCRIPTION";
     public static final String URL_IMAGE_MESSAGE = "_URL_IMAGE";
+    public static final String URL_MESSAGE = "_URL";
     private TextView m_title;
     private ImageView m_image;
     private TextView m_author;
     private TextView m_date;
     private TextView m_description;
+    private TextView m_url;
 
 
     @Override
@@ -40,8 +42,9 @@ public class InfoActivity extends AppCompatActivity {
         String date = intent.getStringExtra(DATE_MESSAGE);
         String desciption = intent.getStringExtra(DESCRIPTION_MESSAGE);
         String urlImage = intent.getStringExtra(URL_IMAGE_MESSAGE);
+        String url = intent.getStringExtra(URL_MESSAGE);
         initComposent();
-        setLayout(title, author, date, desciption, urlImage);
+        setLayout(title, author, date, desciption, urlImage, url);
 
         findViewById(R.id.button_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +55,7 @@ public class InfoActivity extends AppCompatActivity {
 
     }
 
-    private void setLayout(String title, String author, String date, String description, String urlImage) {
+    private void setLayout(String title, String author, String date, String description, String urlImage, String url) {
         this.m_title.setText(title);
         this.m_author.setText(author);
         this.m_date.setText(date);
@@ -62,6 +65,7 @@ public class InfoActivity extends AppCompatActivity {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(m_image);
         this.m_description.setText(description);
+        this.m_url.setText(url);
     }
 
     private void initComposent() {
@@ -70,5 +74,6 @@ public class InfoActivity extends AppCompatActivity {
         this.m_author = findViewById(R.id.author);
         this.m_date = findViewById(R.id.date);
         this.m_description = findViewById(R.id.description);
+        this.m_url = findViewById(R.id.lienArticle);
     }
 }
