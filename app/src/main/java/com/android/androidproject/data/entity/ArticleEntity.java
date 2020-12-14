@@ -17,6 +17,7 @@ public class ArticleEntity {
     public String description;
     public String date;
     public String imageUrl;
+    public String url;
 
     @NonNull
     public String getTitle() {
@@ -39,6 +40,10 @@ public class ArticleEntity {
         return imageUrl;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
     public void setTitle(@NonNull String title) {
         this.title = title;
     }
@@ -57,5 +62,9 @@ public class ArticleEntity {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
