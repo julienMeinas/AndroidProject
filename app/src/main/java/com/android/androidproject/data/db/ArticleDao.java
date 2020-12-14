@@ -28,3 +28,4 @@ public interface ArticleDao {
     Single<List<String>> getFavoriteTitleList();
 
 }
+

@@ -89,7 +89,7 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
                 public void onClick(View v) {
                     m_articleActionInterface.onInfoClicked(articleViewItem.getTitle(), articleViewItem.getAuthor(),
                             articleViewItem.getPublishedAt(), articleViewItem.getDescription(),
-                            articleViewItem.getUrlToImage());
+                            articleViewItem.getUrlToImage(), articleViewItem.getUrl());
                 }
             });
 

@@ -174,7 +174,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     @Override
     public void onInfoClicked(String articleTitle, String articleAuthor,
                               String articleDate, String articleDescription,
-                              String articleUrlImage) {
+                              String articleUrlImage, String articleUrl) {
         Log.d(TAG, "onInfoClicked call");
         Intent intent = new Intent(getActivity(), InfoActivity.class);
         intent.putExtra(InfoActivity.TITLE_MESSAGE, articleTitle);
@@ -182,12 +182,14 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
         intent.putExtra(InfoActivity.DATE_MESSAGE, articleDate);
         intent.putExtra(InfoActivity.DESCRIPTION_MESSAGE, articleDescription);
         intent.putExtra(InfoActivity.URL_IMAGE_MESSAGE, articleUrlImage);
+        intent.putExtra(InfoActivity.URL_MESSAGE, articleUrl);
         startActivity(intent);
     }
 
     @Override
     public void onFav(String articleTitle, String articleAuthor,
-                      String articleDate, String articleDescription, String articleUrlImage) {
+                      String articleDate, String articleDescription,
+                      String articleUrlImage, String url) {
         Log.d(TAG, "onFav call");
         ArticleEntity articleEntity = new ArticleEntity();
         articleEntity.setTitle(articleTitle);
@@ -195,7 +197,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
         articleEntity.setDate(articleDate);
         articleEntity.setDescription(articleDescription);
         articleEntity.setImageUrl(articleUrlImage);
-
+        articleEntity.setUrl(url);
         favoriteViewModel.addBookToFavorite(articleEntity);
     }
 

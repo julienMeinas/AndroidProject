@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.androidproject.R;
+import com.android.androidproject.data.api.model.ArticleModel;
 import com.android.androidproject.data.di.FakeDependencyInjection;
 import com.android.androidproject.data.entity.ArticleEntity;
 import com.android.androidproject.presentation.InfoActivity.InfoActivity;
@@ -43,6 +44,7 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     private RecyclerViewListAdapter m_recyclerViewListAdapter;
     private RecyclerViewGrilleAdapter m_recyclerViewGrilleAdapter;
     private boolean layoutManagerList;
+    private static final String msgAddFavorite = "Ajout aux favoris";
 
     public HomeFragment(){
     }
@@ -141,7 +143,7 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     @Override
     public void onInfoClicked(String articleTitle, String articleAuthor,
                               String articleDate, String articleDescription,
-                              String articleUrlImage) {
+                              String articleUrlImage, String articleUrl) {
         Log.d(TAG, "onInfoClicked call");
         Intent intent = new Intent(getActivity(), InfoActivity.class);
         intent.putExtra(InfoActivity.TITLE_MESSAGE, articleTitle);
@@ -149,20 +151,23 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
         intent.putExtra(InfoActivity.DATE_MESSAGE, articleDate);
         intent.putExtra(InfoActivity.DESCRIPTION_MESSAGE, articleDescription);
         intent.putExtra(InfoActivity.URL_IMAGE_MESSAGE, articleUrlImage);
+        intent.putExtra(InfoActivity.URL_MESSAGE, articleUrl);
         startActivity(intent);
     }
 
     @Override
     public void onFav(String articleTitle, String articleAuthor,
-                      String articleDate, String articleDescription, String articleUrlImage) {
+                      String articleDate, String articleDescription,
+                      String articleUrlImage, String articleUrl) {
         Log.d(TAG, "onFav call");
-        displaySnackBar("Ajout au favoris");
+        displaySnackBar(msgAddFavorite);
         ArticleEntity articleEntity = new ArticleEntity();
         articleEntity.setTitle(articleTitle);
         articleEntity.setAuthor(articleAuthor);
         articleEntity.setDate(articleDate);
         articleEntity.setDescription(articleDescription);
         articleEntity.setImageUrl(articleUrlImage);
+        articleEntity.setUrl(articleUrl);
 
         favoriteViewModel.addBookToFavorite(articleEntity);
     }

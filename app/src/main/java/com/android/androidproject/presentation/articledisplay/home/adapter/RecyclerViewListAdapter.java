@@ -96,7 +96,7 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
                 public void onClick(View v) {
                     m_articleActionInterface.onInfoClicked(articleViewItem.getTitle(), articleViewItem.getAuthor(),
                                                            articleViewItem.getPublishedAt(), articleViewItem.getDescription(),
-                                                           articleViewItem.getUrlToImage());
+                                                           articleViewItem.getUrlToImage(), articleViewItem.getUrl());
                 }
             });
 
@@ -104,7 +104,8 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
                 @Override
                 public void onClick(View v) {
                     m_articleActionInterface.onFav(articleViewItem.getTitle(), articleViewItem.getAuthor(),
-                            articleViewItem.getPublishedAt(), articleViewItem.getDescription(), articleViewItem.getUrlToImage());
+                                                   articleViewItem.getPublishedAt(), articleViewItem.getDescription(),
+                                                   articleViewItem.getUrlToImage(), articleViewItem.getUrl());
                 }
             });
 

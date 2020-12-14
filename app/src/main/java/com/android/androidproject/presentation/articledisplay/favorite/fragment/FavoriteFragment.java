@@ -108,7 +108,7 @@ public class FavoriteFragment extends Fragment implements ArticleActionInterface
     }
 
     @Override
-    public void onInfoClicked(String articleTitle, String articleAuthor, String articleDate, String articleDescription, String articleUrlImage) {
+    public void onInfoClicked(String articleTitle, String articleAuthor, String articleDate, String articleDescription, String articleUrlImage, String articleUrl) {
         Log.d(TAG, "onInfoClicked call");
         Intent intent = new Intent(getActivity(), InfoActivity.class);
         intent.putExtra(InfoActivity.TITLE_MESSAGE, articleTitle);
@@ -116,6 +116,7 @@ public class FavoriteFragment extends Fragment implements ArticleActionInterface
         intent.putExtra(InfoActivity.DATE_MESSAGE, articleDate);
         intent.putExtra(InfoActivity.DESCRIPTION_MESSAGE, articleDescription);
         intent.putExtra(InfoActivity.URL_IMAGE_MESSAGE, articleUrlImage);
+        intent.putExtra(InfoActivity.URL_MESSAGE, articleUrl);
         startActivity(intent);
     }
 }

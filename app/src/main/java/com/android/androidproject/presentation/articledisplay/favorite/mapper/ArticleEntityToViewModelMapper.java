@@ -15,6 +15,7 @@ public class ArticleEntityToViewModelMapper {
         articleViewItem.setPublishedAt(articleEntity.getDate());
         articleViewItem.setTitle(articleEntity.getTitle());
         articleViewItem.setUrlToImage(articleEntity.getImageUrl());
+        articleViewItem.setUrl(articleEntity.getUrl());
         return articleViewItem;
     }
 
