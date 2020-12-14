@@ -1,5 +1,8 @@
 package com.android.androidproject.presentation.articledisplay.home.adapter;
 
+/**
+ * Object use for representing Article in Home fragment in recylcer view
+ */
 public class ArticleViewItem {
     private String author;
     private String title;

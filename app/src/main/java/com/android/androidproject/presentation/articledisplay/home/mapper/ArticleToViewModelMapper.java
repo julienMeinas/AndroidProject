@@ -6,12 +6,22 @@ import com.android.androidproject.presentation.articledisplay.home.adapter.Artic
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleToViewModelMapper {
 
+public class ArticleToViewModelMapper {
+    /**
+     * map date
+     * @param date
+     * @return date mapped
+     */
     private String mapDate(String date) {
         return date.substring(0, 10);
     }
 
+    /**
+     * allow to map ArticleModel to ArticleViewItem
+     * @param articleModel : article
+     * @return ArticleViewItem object
+     */
     private ArticleViewItem map(ArticleModel articleModel) {
         ArticleViewItem res = new ArticleViewItem();
         res.setTitle(articleModel.getTitle());

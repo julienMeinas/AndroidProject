@@ -21,6 +21,9 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Recycler view for Search fragment when we use LinearLayoutManager
+ */
 public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewListAdapter.ViewHoler > {
     private static final String TAG = "RecyclerViewAdapter";
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();

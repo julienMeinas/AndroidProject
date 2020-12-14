@@ -1,5 +1,8 @@
 package com.android.androidproject.presentation.articledisplay.search.adapter;
 
+/**
+ * Action for the interface Search
+ */
 public interface ArticleActionInterface {
 
     void onInfoClicked(String articleTitle, String articleAuthor,

@@ -1,5 +1,8 @@
 package com.android.androidproject.presentation.articledisplay.home.adapter;
 
+/**
+ * Action for the interface Home
+ */
 public interface ArticleActionInterface {
 
     void onInfoClicked(String articleTitle, String articleAuthor,

@@ -56,6 +56,15 @@ public class InfoActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * add values in all elements in layout info_activity
+     * @param title : title of the article
+     * @param author : author of the article
+     * @param date : date of the article
+     * @param description : description of the article
+     * @param urlImage : urlIgame of the article
+     * @param url : url of the article
+     */
     private void setLayout(String title, String author, String date, String description, String urlImage, String url) {
         this.m_title.setText(title);
         this.m_author.setText(author);
@@ -70,6 +79,9 @@ public class InfoActivity extends AppCompatActivity {
         this.m_url.setText(url);
     }
 
+    /**
+     * init all attributes
+     */
     private void initComposent() {
         this.m_title = findViewById(R.id.titreArticle);
         this.m_image = findViewById(R.id.image);

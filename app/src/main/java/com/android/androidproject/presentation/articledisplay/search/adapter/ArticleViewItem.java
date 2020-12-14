@@ -1,5 +1,8 @@
 package com.android.androidproject.presentation.articledisplay.search.adapter;
 
+/**
+ * Object use for representing Article in Search fragment in recylcer view
+ */
 public class ArticleViewItem {
     private String author;
     private String title;

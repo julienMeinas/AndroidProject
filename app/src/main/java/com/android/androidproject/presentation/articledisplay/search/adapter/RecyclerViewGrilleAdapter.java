@@ -19,6 +19,9 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Recycler view for Search fragment when we use GridLayoutManager
+ */
 public class RecyclerViewGrilleAdapter extends RecyclerView.Adapter<RecyclerViewGrilleAdapter.ViewHoler > {
     private static final String TAG = "RecyclerViewAdapter";
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();

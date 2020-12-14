@@ -34,18 +34,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Search Fragment
+ */
 public class SearchFragment extends Fragment implements ArticleActionInterface {
     public static SearchFragment singleton = null;
     public static final String TAG = "SearchFragment";
     private View m_view;
-    private SearchView searchView;
+    private SearchView m_searchView;
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
 
     private SearchViewModel m_searchViewModel;
-    private FavoriteViewModel favoriteViewModel;
+    private FavoriteViewModel m_favoriteViewModel;
     private RecyclerViewListAdapter m_recyclerViewListAdapter;
     private RecyclerViewGrilleAdapter m_recyclerViewGrilleAdapter;
-    private boolean layoutManagerList;
+    private boolean m_layoutManagerList;
 
     public SearchFragment(){}
 
@@ -74,13 +77,13 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
         m_view.findViewById(R.id.switch_layout_manager).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(layoutManagerList) {
+                if(m_layoutManagerList) {
                     setupRecyclerViewGrid();
-                    layoutManagerList = false;
+                    m_layoutManagerList = false;
                 }
                 else {
                     setupRecyclerViewList();
-                    layoutManagerList = true;
+                    m_layoutManagerList = true;
                 }
             }
         });
@@ -88,6 +91,9 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     }
 
 
+    /**
+     * init recycler view [List]
+     */
     private void setupRecyclerViewList() {
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
         m_recyclerViewListAdapter = new RecyclerViewListAdapter(this);
@@ -97,9 +103,12 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     }
 
 
+    /**
+     *  setup recylcer view [List]
+     */
     private void registerViewModelsList() {
         m_searchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactorySearch()).get(SearchViewModel.class);
-        favoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getFavoriteViewModel()).get(FavoriteViewModel.class);
+        m_favoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getFavoriteViewModel()).get(FavoriteViewModel.class);
         //System.out.println("FVVM is " + bookFavoriteViewModel);
 
         m_searchViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
@@ -110,7 +119,9 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
         });
     }
 
-
+    /**
+     * init recycler view [Grid]
+     */
     private void setupRecyclerViewGrid() {
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
         m_recyclerViewGrilleAdapter = new RecyclerViewGrilleAdapter(this);
@@ -119,7 +130,9 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
         registerViewModelsGrid();
     }
 
-
+    /**
+     *  setup recylcer view [Grid]
+     */
     private void registerViewModelsGrid() {
         m_searchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactorySearch()).get(SearchViewModel.class);
         //System.out.println("FVVM is " + bookFavoriteViewModel);
@@ -132,10 +145,12 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
         });
     }
 
-
+    /**
+     * setup serach view
+     */
     private void setupSearchView() {
-        searchView = m_view.findViewById(R.id.search_view);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        m_searchView = m_view.findViewById(R.id.search_view);
+        m_searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             private Timer timer = new Timer();
 
             @Override
@@ -198,7 +213,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
         articleEntity.setDescription(articleDescription);
         articleEntity.setImageUrl(articleUrlImage);
         articleEntity.setUrl(url);
-        favoriteViewModel.addBookToFavorite(articleEntity);
+        m_favoriteViewModel.addBookToFavorite(articleEntity);
     }
 
 }

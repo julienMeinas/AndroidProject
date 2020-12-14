@@ -33,6 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 import androidx.lifecycle.Observer;
 
+/**
+ * Home Fragment
+ */
 public class HomeFragment extends Fragment implements ArticleActionInterface {
     private static HomeFragment singleton = null;
     private static final String TAG = "HomeFragment";
@@ -49,6 +52,10 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     public HomeFragment(){
     }
 
+    /**
+     * Singleton pattern
+     * @return instance of Home fragment
+     */
     public static HomeFragment newInstance() {
         if(singleton == null) {
             singleton = new HomeFragment();
@@ -87,7 +94,9 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     }
 
 
-
+    /**
+     * init recycler view [List]
+     */
     public void initRecyclerViewList() {
         Log.d(TAG, "initRecyclerView call");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
@@ -97,6 +106,9 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
         registerViewModelsList();
     }
 
+    /**
+     *  setup recylcer view [List]
+     */
     private void registerViewModelsList() {
         Log.d(TAG, "registerViewModels call");
         m_homeViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(HomeViewModel.class);
@@ -111,7 +123,9 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
         });
     }
 
-
+    /**
+     * init recycler view [Grid]
+     */
     public void initRecyclerViewGrid() {
         Log.d(TAG, "initRecyclerView call");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
@@ -121,7 +135,9 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
         registerViewModelsGrid();
     }
 
-
+    /**
+     *  setup recylcer view [Grid]
+     */
     private void registerViewModelsGrid() {
         Log.d(TAG, "registerViewModels call");
         m_homeViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(HomeViewModel.class);

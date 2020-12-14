@@ -1,5 +1,8 @@
 package com.android.androidproject.data.api.model;
 
+/**
+ * object for representing source in api newsAPI
+ */
 public class ArticleSource {
     private String name;
     private String id;
