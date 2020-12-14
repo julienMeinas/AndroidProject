@@ -135,11 +135,6 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
         });
     }
 
-    public void displaySnackBar(String message) {
-        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG)
-                .show();
-    }
-
     @Override
     public void onInfoClicked(String articleTitle, String articleAuthor,
                               String articleDate, String articleDescription,
@@ -160,7 +155,6 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
                       String articleDate, String articleDescription,
                       String articleUrlImage, String articleUrl) {
         Log.d(TAG, "onFav call");
-        displaySnackBar(msgAddFavorite);
         ArticleEntity articleEntity = new ArticleEntity();
         articleEntity.setTitle(articleTitle);
         articleEntity.setAuthor(articleAuthor);

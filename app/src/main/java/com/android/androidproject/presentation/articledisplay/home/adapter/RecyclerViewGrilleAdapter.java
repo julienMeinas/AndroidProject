@@ -14,6 +14,7 @@ import com.android.androidproject.presentation.articledisplay.home.adapter.Artic
 import com.android.androidproject.presentation.articledisplay.home.adapter.ArticleViewItem;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,8 @@ public class RecyclerViewGrilleAdapter extends RecyclerView.Adapter<RecyclerView
         private ArticleViewItem articleViewItem;
         private View m_view;
         private ArticleActionInterface m_articleActionInterface;
+        private final String m_msgAddFav = "Ajout aux favoris";
+        private final String m_msgAlreadyAdd = "Déja ajouté";
 
         public ViewHoler(@NonNull View itemView, ArticleActionInterface articleActionInterface) {
             super(itemView);
@@ -100,6 +103,11 @@ public class RecyclerViewGrilleAdapter extends RecyclerView.Adapter<RecyclerView
             this.m_view.findViewById(R.id.button_fav).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(articleViewItem.getIsFavorite()) {
+                        Snackbar.make(m_view, m_msgAlreadyAdd, Snackbar.LENGTH_LONG).show();
+                        return;
+                    }
+                    Snackbar.make(m_view, m_msgAddFav, Snackbar.LENGTH_LONG).show();
                     m_articleActionInterface.onFav(articleViewItem.getTitle(), articleViewItem.getAuthor(),
                             articleViewItem.getPublishedAt(), articleViewItem.getDescription(), articleViewItem.getUrlToImage(), articleViewItem.getUrl());
                 }

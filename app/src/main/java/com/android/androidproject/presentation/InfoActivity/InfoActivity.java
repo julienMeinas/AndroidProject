@@ -2,6 +2,7 @@ package com.android.androidproject.presentation.InfoActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class InfoActivity extends AppCompatActivity {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(m_image);
         this.m_description.setText(description);
+        this.m_url.setMovementMethod(LinkMovementMethod.getInstance());
         this.m_url.setText(url);
     }
 

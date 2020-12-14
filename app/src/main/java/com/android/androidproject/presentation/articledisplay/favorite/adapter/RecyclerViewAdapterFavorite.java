@@ -18,6 +18,9 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * recyler view adapter for the list of article favorite
+ */
 public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapterFavorite.ViewHoler > {
     private static final String TAG = "ArticleDetailAdapter";
     private List<ArticleViewItem> m_articles;

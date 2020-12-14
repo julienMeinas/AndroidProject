@@ -8,6 +8,10 @@ import java.util.List;
 
 public class ArticleEntityToViewModelMapper {
 
+    /**
+     * @param articleEntity : An object of the type ArticleEntity who represents the articles in the dataBase Room SQLite
+     * @return A new object of the type ArticleViewItem who represents the articles in the item
+     */
     public ArticleViewItem map(ArticleEntity articleEntity) {
         ArticleViewItem articleViewItem = new ArticleViewItem();
         articleViewItem.setAuthor(articleEntity.getAuthor());
@@ -19,6 +23,10 @@ public class ArticleEntityToViewModelMapper {
         return articleViewItem;
     }
 
+    /**
+     * @param articleEntities list of ArticleEntity
+     * @return list of ArticleViewItem
+     */
     public List<ArticleViewItem> map (List<ArticleEntity> articleEntities) {
         List<ArticleViewItem> articleDetailViewModels = new ArrayList<>();
         for(ArticleEntity articleEntity : articleEntities) {

@@ -1,5 +1,8 @@
 package com.android.androidproject.presentation.articledisplay.favorite.adapter;
 
+/**
+ * object use for recylcer view
+ */
 public class ArticleViewItem {
     private String author;
     private String title;

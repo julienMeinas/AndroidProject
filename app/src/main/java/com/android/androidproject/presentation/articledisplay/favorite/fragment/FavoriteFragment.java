@@ -18,7 +18,6 @@ import com.android.androidproject.presentation.InfoActivity.InfoActivity;
 import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleViewItem;
 import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleActionInterface;
 import com.android.androidproject.presentation.articledisplay.favorite.adapter.RecyclerViewAdapterFavorite;
-import com.android.androidproject.presentation.articledisplay.favorite.adapter.ArticleFavoriteViewModel;
 import com.android.androidproject.presentation.viewmodel.FavoriteViewModel;
 import com.android.androidproject.presentation.viewmodel.HomeViewModel;
 
@@ -28,12 +27,14 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Fragment Favorite
+ */
 public class FavoriteFragment extends Fragment implements ArticleActionInterface {
     private static FavoriteFragment singleton = null;
     private static final String TAG = "FavoriteFragment";
     private View m_view;
-    private ArrayList<ArticleFavoriteViewModel> m_articles = new ArrayList<>();
-
+    private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
     private FavoriteViewModel m_favoriteViewModel;
     private HomeViewModel m_homeViewModel;
     private RecyclerViewAdapterFavorite m_recyclerViewListAdapter;
@@ -42,6 +43,10 @@ public class FavoriteFragment extends Fragment implements ArticleActionInterface
     public FavoriteFragment() {
     }
 
+    /**
+     * Singleon pattern
+     * @return instance of FavoriteFragment
+     */
     public static FavoriteFragment newInstance() {
         if(singleton == null) {
             singleton = new FavoriteFragment();
@@ -66,29 +71,22 @@ public class FavoriteFragment extends Fragment implements ArticleActionInterface
         initRecyclerViewList();
     }
 
+    /**
+     * init recycler view
+     */
     public void initRecyclerViewList() {
         Log.d(TAG, "initRecyclerView call");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
         m_recyclerViewListAdapter = new RecyclerViewAdapterFavorite(this);
         recyclerView.setAdapter(m_recyclerViewListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        registerViewModels();
+        setupRecyclerView();
     }
 
 
-
-    private void registerViewModels() {
-        Log.d(TAG, "registerViewModels call");
-        m_favoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(FavoriteViewModel.class);
-        m_favoriteViewModel.getFavorites().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
-
-            @Override
-            public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
-                m_recyclerViewListAdapter.bindViewModels(bookItemViewModelList);
-            }
-        });
-    }
-
+    /**
+     * setup recycler view
+     */
     private void setupRecyclerView() {
         m_favoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(FavoriteViewModel.class);
         m_favoriteViewModel.getFavorites().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
@@ -101,12 +99,25 @@ public class FavoriteFragment extends Fragment implements ArticleActionInterface
     }
 
 
+    /**
+     * remove article in favorite (dataBase)
+     * @param title the title of the article removed
+     */
     @Override
     public void removeFavorite(String title) {
         Log.d(TAG, "onRemove call");
         m_favoriteViewModel.removeBookFromFavorites(title);
     }
 
+    /**
+     * method called when we click on info button => going to InfoActivity with element of the article
+     * @param articleTitle : title of the article
+     * @param articleAuthor : author of the article
+     * @param articleDate : date of the article
+     * @param articleDescription : description of the article
+     * @param articleUrlImage : urlImage of the article
+     * @param articleUrl : url of the article
+     */
     @Override
     public void onInfoClicked(String articleTitle, String articleAuthor, String articleDate, String articleDescription, String articleUrlImage, String articleUrl) {
         Log.d(TAG, "onInfoClicked call");
