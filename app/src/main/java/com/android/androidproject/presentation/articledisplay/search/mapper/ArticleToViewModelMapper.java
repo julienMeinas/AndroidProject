@@ -35,7 +35,7 @@ public class ArticleToViewModelMapper {
             res.setUrlToImage(articleModel.getUrlToImage());
         }
         else{
-            res.setUrlToImage("https://static1.seekingalpha.com/uploads/2020/11/22/173432-16060661162838283.png");
+            res.setUrlToImage("https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled.png");
         }
         res.setPublishedAt(mapDate(articleModel.getPublishedAt()));
         res.setDescription(articleModel.getDescription());
