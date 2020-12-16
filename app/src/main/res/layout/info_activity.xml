@@ -99,6 +99,11 @@
         android:layout_margin="15dp"/>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lien de l'article : "/>
+
+    <TextView
         android:id="@+id/lienArticle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
