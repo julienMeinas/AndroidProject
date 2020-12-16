@@ -38,6 +38,14 @@
             android:id="@+id/progress_bar"
             android:layout_centerInParent="true"
             android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewError"
+            android:layout_centerInParent="true"
+            android:text="Erreur ! Vérifiez votre connexion internet !"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

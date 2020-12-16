@@ -23,6 +23,7 @@ public class HomeViewModel extends ViewModel {
     private ArticleDisplayDataRepository articleDisplayDataRepository;
     private CompositeDisposable compositeDisposable;
     private MutableLiveData<Boolean> isDataLoading = new MutableLiveData<Boolean>();
+    private MutableLiveData<Boolean> errorConnexion = new MutableLiveData<Boolean>();
     private ArticleToViewModelMapper articleToViewModelMapper;
     private MutableLiveData<List<ArticleViewItem>> m_Articles = new MutableLiveData<List<ArticleViewItem>>();
 
@@ -45,12 +46,15 @@ public class HomeViewModel extends ViewModel {
                     @Override
                     public void onSuccess(ArticleResponse articleResponse) {
                         m_Articles.setValue(articleToViewModelMapper.map(articleResponse.getArticles()));
+                        isDataLoading.setValue(false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         // handle the error case
                         //Yet, do not do nothing in this app
+                        errorConnexion.setValue(true);
+                        isDataLoading.setValue(false);
                         System.out.println(e.toString());
                     }
 
@@ -61,4 +65,10 @@ public class HomeViewModel extends ViewModel {
      * @return all bests articles
      */
     public LiveData<List<ArticleViewItem>> getArticles() {return this.m_Articles; }
+
+    public MutableLiveData<Boolean> getIsDataLoading() {
+        return isDataLoading;
+    }
+
+    public MutableLiveData<Boolean> getErrorConnexion() {return errorConnexion; }
 }

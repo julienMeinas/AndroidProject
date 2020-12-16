@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.androidproject.R;
 import com.android.androidproject.data.di.FakeDependencyInjection;
@@ -44,6 +45,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     private View m_view;
     private SearchView m_searchView;
     private ProgressBar m_progressBar;
+    private TextView m_textViewErrorConnexion;
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
     private SearchViewModel m_searchViewModel;
     private FavoriteViewModel m_favoriteViewModel;
@@ -73,6 +75,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         m_progressBar = m_view.findViewById(R.id.progress_bar);
+        m_textViewErrorConnexion = m_view.findViewById(R.id.textViewError);
         setupSearchView();
         setupRecyclerViewList();
 
@@ -126,6 +129,13 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
                 m_progressBar.setVisibility(isDataLoading ? View.VISIBLE : View.GONE);
             }
         });
+
+        m_searchViewModel.getErrorConnexion().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean errorConnexion) {
+                m_textViewErrorConnexion.setVisibility(errorConnexion ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     /**
@@ -159,7 +169,15 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
                 m_progressBar.setVisibility(isDataLoading ? View.VISIBLE : View.GONE);
             }
         });
+
+        m_searchViewModel.getErrorConnexion().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean errorConnexion) {
+                m_textViewErrorConnexion.setVisibility(errorConnexion ? View.VISIBLE : View.GONE);
+            }
+        });
     }
+
 
     /**
      * setup serach view

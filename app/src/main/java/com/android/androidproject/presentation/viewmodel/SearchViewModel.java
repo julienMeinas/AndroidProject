@@ -20,8 +20,10 @@ public class SearchViewModel extends ViewModel {
     private ArticleDisplayDataRepository articleDisplayDataRepository;
     private CompositeDisposable compositeDisposable;
     private MutableLiveData<Boolean> isDataLoading = new MutableLiveData<Boolean>();
+    private MutableLiveData<Boolean> errorConnexion = new MutableLiveData<Boolean>();
     private ArticleToViewModelMapper articleToViewModelMapper;
     private MutableLiveData<List<ArticleViewItem>> m_Articles = new MutableLiveData<List<ArticleViewItem>>();
+
 
 
     public SearchViewModel(ArticleDisplayDataRepository articleDisplayDataRepository) {
@@ -47,6 +49,7 @@ public class SearchViewModel extends ViewModel {
                     public void onError(Throwable e) {
                         // handle the error case
                         //Yet, do not do nothing in this app
+                        errorConnexion.setValue(true);
                         System.out.println(e.toString());
                         isDataLoading.setValue(false);
                     }
@@ -59,6 +62,8 @@ public class SearchViewModel extends ViewModel {
     public MutableLiveData<Boolean> getIsDataLoading() {
         return isDataLoading;
     }
+
+    public MutableLiveData<Boolean> getErrorConnexion() {return errorConnexion; }
 
     public void cancelSubscription() {
         compositeDisposable.clear();

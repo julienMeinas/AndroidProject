@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +42,8 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     private static HomeFragment singleton = null;
     private static final String TAG = "HomeFragment";
     private View m_view;
+    private ProgressBar m_progressBar;
+    private TextView m_textViewErrorConnexion;
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
     private CoordinatorLayout coordinatorLayout;
     private HomeViewModel m_homeViewModel;
@@ -75,6 +79,9 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        m_progressBar = m_view.findViewById(R.id.progress_bar);
+        m_textViewErrorConnexion = m_view.findViewById(R.id.textViewError);
+
         layoutManagerList = true;
         initRecyclerViewList();
         coordinatorLayout = m_view.findViewById(R.id.home);
@@ -115,10 +122,16 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
         favoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getFavoriteViewModel()).get(FavoriteViewModel.class);
         m_homeViewModel.getBestArticles();
         m_homeViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
-
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
                 m_recyclerViewListAdapter.bindViewModels(bookItemViewModelList);
+            }
+        });
+
+        m_homeViewModel.getIsDataLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isDataLoading) {
+                m_progressBar.setVisibility(isDataLoading ? View.VISIBLE : View.GONE);
             }
         });
     }
@@ -142,11 +155,25 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
         Log.d(TAG, "registerViewModels call");
         m_homeViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory()).get(HomeViewModel.class);
         m_homeViewModel.getBestArticles();
-        m_homeViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
 
+        m_homeViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
                 m_recyclerViewGrilleAdapter.bindViewModels(bookItemViewModelList);
+            }
+        });
+
+        m_homeViewModel.getIsDataLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isDataLoading) {
+                m_progressBar.setVisibility(isDataLoading ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        m_homeViewModel.getErrorConnexion().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean errorConnexion) {
+                m_textViewErrorConnexion.setVisibility(errorConnexion ? View.VISIBLE : View.GONE);
             }
         });
     }
