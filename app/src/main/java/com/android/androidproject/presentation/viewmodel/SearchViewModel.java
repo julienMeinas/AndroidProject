@@ -40,6 +40,7 @@ public class SearchViewModel extends ViewModel {
                     @Override
                     public void onSuccess(ArticleResponse articleResponse) {
                         m_Articles.setValue(articleToViewModelMapper.map(articleResponse.getArticles()));
+                        isDataLoading.setValue(false);
                     }
 
                     @Override
@@ -47,6 +48,7 @@ public class SearchViewModel extends ViewModel {
                         // handle the error case
                         //Yet, do not do nothing in this app
                         System.out.println(e.toString());
+                        isDataLoading.setValue(false);
                     }
 
                 }));

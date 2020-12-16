@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.android.androidproject.R;
 import com.android.androidproject.data.di.FakeDependencyInjection;
@@ -42,8 +43,8 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     public static final String TAG = "SearchFragment";
     private View m_view;
     private SearchView m_searchView;
+    private ProgressBar m_progressBar;
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
-
     private SearchViewModel m_searchViewModel;
     private FavoriteViewModel m_favoriteViewModel;
     private RecyclerViewListAdapter m_recyclerViewListAdapter;
@@ -71,6 +72,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        m_progressBar = m_view.findViewById(R.id.progress_bar);
         setupSearchView();
         setupRecyclerViewList();
 
@@ -117,6 +119,13 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
                 m_recyclerViewListAdapter.bindViewModels(bookItemViewModelList);
             }
         });
+
+        m_searchViewModel.getIsDataLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isDataLoading) {
+                m_progressBar.setVisibility(isDataLoading ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     /**
@@ -141,6 +150,13 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
                 m_recyclerViewGrilleAdapter.bindViewModels(bookItemViewModelList);
+            }
+        });
+
+        m_searchViewModel.getIsDataLoading().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isDataLoading) {
+                m_progressBar.setVisibility(isDataLoading ? View.VISIBLE : View.GONE);
             }
         });
     }
