@@ -125,6 +125,7 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
                 m_recyclerViewListAdapter.bindViewModels(bookItemViewModelList);
+                m_textViewErrorConnexion.setVisibility(View.GONE);
             }
         });
 
@@ -132,6 +133,13 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
             @Override
             public void onChanged(Boolean isDataLoading) {
                 m_progressBar.setVisibility(isDataLoading ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        m_homeViewModel.getErrorConnexion().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean errorConnexion) {
+                m_textViewErrorConnexion.setVisibility(errorConnexion ? View.VISIBLE : View.GONE);
             }
         });
     }
@@ -160,6 +168,7 @@ public class HomeFragment extends Fragment implements ArticleActionInterface {
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
                 m_recyclerViewGrilleAdapter.bindViewModels(bookItemViewModelList);
+                m_textViewErrorConnexion.setVisibility(View.GONE);
             }
         });
 

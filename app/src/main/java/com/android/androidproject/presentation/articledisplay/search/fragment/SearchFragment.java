@@ -120,6 +120,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
                 m_recyclerViewListAdapter.bindViewModels(bookItemViewModelList);
+                m_textViewErrorConnexion.setVisibility(View.GONE);
             }
         });
 
@@ -160,6 +161,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
             @Override
             public void onChanged(List<ArticleViewItem> bookItemViewModelList) {
                 m_recyclerViewGrilleAdapter.bindViewModels(bookItemViewModelList);
+                m_textViewErrorConnexion.setVisibility(View.GONE);
             }
         });
 
