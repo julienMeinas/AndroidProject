@@ -38,7 +38,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewError"
             android:layout_centerInParent="true"
-            android:text="Erreur ! Vérifiez votre connexion internet !"
+            android:text="Une erreur s'est produite lors \ndu chargement d'articles.\nVérifiez votre connexion \ninternet ou réessayez plus tard"
+            android:textSize="20sp"
             android:visibility="gone"/>
     </RelativeLayout>
 
