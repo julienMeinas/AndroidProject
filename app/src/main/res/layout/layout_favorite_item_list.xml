@@ -125,7 +125,7 @@
                     app:layout_constraintLeft_toRightOf="@id/button_info"
                     android:text="Remove"
                     android:textColor="@color/white"
-                    android:background="@color/red">
+                    android:background="@drawable/custom_button_remove">
                 </Button>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

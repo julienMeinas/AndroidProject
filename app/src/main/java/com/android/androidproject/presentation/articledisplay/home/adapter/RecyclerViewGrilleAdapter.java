@@ -1,5 +1,6 @@
 package com.android.androidproject.presentation.articledisplay.home.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import java.util.List;
  * Recycler view for Home fragment when we use GridLayoutManager
  */
 public class RecyclerViewGrilleAdapter extends RecyclerView.Adapter<RecyclerViewGrilleAdapter.ViewHoler > {
-    private static final String TAG = "RecyclerViewAdapter";
+    private static final String TAG = "HomeRecyclerViewAdapter";
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
     private ArticleActionInterface m_articleActionInterface;
 
@@ -32,6 +33,7 @@ public class RecyclerViewGrilleAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public void bindViewModels(List<ArticleViewItem> bookViewItemList) {
+        Log.d(TAG, "bindViewModels stated");
         this.m_articles.clear();
         this.m_articles.addAll(bookViewItemList);
         notifyDataSetChanged();
@@ -41,6 +43,7 @@ public class RecyclerViewGrilleAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public ViewHoler onCreateViewHolder(ViewGroup parent,
                                         int viewType) {
+        Log.d(TAG, "onCreateViewHolder started");
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_item_grille, parent, false);

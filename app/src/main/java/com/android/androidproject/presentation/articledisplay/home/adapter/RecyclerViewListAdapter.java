@@ -25,7 +25,7 @@ import java.util.List;
  * Recycler view for Home fragment when we use LinearLayoutManager
  */
 public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewListAdapter.ViewHoler > {
-    private static final String TAG = "RecyclerViewAdapter";
+    private static final String TAG = "HomeRecyclerViewAdapter";
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
     private ArticleActionInterface m_articleActionInterface;
 
@@ -43,6 +43,7 @@ public class RecyclerViewListAdapter extends RecyclerView.Adapter<RecyclerViewLi
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder started");
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_item_list, parent, false);

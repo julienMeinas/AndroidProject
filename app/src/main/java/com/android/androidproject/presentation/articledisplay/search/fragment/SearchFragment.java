@@ -46,6 +46,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     private SearchView m_searchView;
     private ProgressBar m_progressBar;
     private TextView m_textViewErrorConnexion;
+    private TextView m_searchTextView;
     private ArrayList<ArticleViewItem> m_articles = new ArrayList<>();
     private SearchViewModel m_searchViewModel;
     private FavoriteViewModel m_favoriteViewModel;
@@ -74,6 +75,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "onActivityCreated started");
         m_progressBar = m_view.findViewById(R.id.progress_bar);
         m_textViewErrorConnexion = m_view.findViewById(R.id.textViewError);
         setupSearchView();
@@ -100,6 +102,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
      * init recycler view [List]
      */
     private void setupRecyclerViewList() {
+        Log.d(TAG, "setupRecyclerViewList started");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
         m_recyclerViewListAdapter = new RecyclerViewListAdapter(this);
         recyclerView.setAdapter(m_recyclerViewListAdapter);
@@ -112,9 +115,9 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
      *  setup recylcer view [List]
      */
     private void registerViewModelsList() {
+        Log.d(TAG, "RegisterViewModelsList started");
         m_searchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactorySearch()).get(SearchViewModel.class);
         m_favoriteViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getFavoriteViewModel()).get(FavoriteViewModel.class);
-        //System.out.println("FVVM is " + bookFavoriteViewModel);
 
         m_searchViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleViewItem>>() {
             @Override
@@ -143,6 +146,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
      * init recycler view [Grid]
      */
     private void setupRecyclerViewGrid() {
+        Log.d(TAG, "setupRecyclerViewGrid started");
         RecyclerView recyclerView = m_view.findViewById(R.id.recycler_view);
         m_recyclerViewGrilleAdapter = new RecyclerViewGrilleAdapter(this);
         recyclerView.setAdapter(m_recyclerViewGrilleAdapter);
@@ -154,6 +158,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
      *  setup recylcer view [Grid]
      */
     private void registerViewModelsGrid() {
+        Log.d(TAG, "registerViewModelsGrid started");
         m_searchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactorySearch()).get(SearchViewModel.class);
         //System.out.println("FVVM is " + bookFavoriteViewModel);
 
@@ -185,7 +190,10 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
      * setup serach view
      */
     private void setupSearchView() {
+        Log.d(TAG, "setupSearchView started");
+        m_searchTextView = m_view.findViewById(R.id.textViewSearch);
         m_searchView = m_view.findViewById(R.id.search_view);
+        m_searchView.setQueryHint("Rechercher un sujet");
         m_searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             private Timer timer = new Timer();
 
@@ -196,6 +204,7 @@ public class SearchFragment extends Fragment implements ArticleActionInterface {
 
             @Override
             public boolean onQueryTextChange(final String s) {
+                m_searchTextView.setVisibility(View.GONE);
                 if (s.length() == 0) {
                     m_searchViewModel.cancelSubscription();
                 } else {
