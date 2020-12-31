@@ -26,7 +26,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/layout_author"
+                android:src="@drawable/drawable_author"
                 android:layout_marginRight="5dp">
             </ImageView>
 
@@ -49,7 +49,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/layout_date"
+                android:src="@drawable/drawable_date"
                 android:layout_marginRight="5dp">
             </ImageView>
 

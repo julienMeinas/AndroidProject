@@ -106,7 +106,7 @@ public class FavoriteFragment extends Fragment implements ArticleActionInterface
     @Override
     public void removeFavorite(String title) {
         Log.d(TAG, "onRemove call");
-        m_favoriteViewModel.removeBookFromFavorites(title);
+        m_favoriteViewModel.removeArticleFromFavorites(title);
     }
 
     /**

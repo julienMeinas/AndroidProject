@@ -31,11 +31,11 @@ public class FavoriteViewModel extends ViewModel {
         this.articleEntityToViewModelMapper = new ArticleEntityToViewModelMapper();
     }
 
-    public MutableLiveData<Event<ArticleEntity>> getBookAddedEvent() {
+    public MutableLiveData<Event<ArticleEntity>> getArticleAddedEvent() {
         return articleAddedEvent;
     }
 
-    public MutableLiveData<Event<String>> getBookDeletedEvent() {
+    public MutableLiveData<Event<String>> getArticleDeletedEvent() {
         return articleDeletedEvent;
     }
 
@@ -93,7 +93,7 @@ public class FavoriteViewModel extends ViewModel {
                 }));
     }
 
-    public void removeBookFromFavorites(final String title) {
+    public void removeArticleFromFavorites(final String title) {
         compositeDisposable.add(articleDisplayDataRepository.removeArticleFromFavorites(title)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
